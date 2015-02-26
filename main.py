@@ -23,7 +23,7 @@ def tableCheck(gate):
     print("")
 
 
-if __name__ == "__main__":
+def printTests():
     print("Not:")
     checkNot(logic)
     print("Or: ")
@@ -38,3 +38,6 @@ if __name__ == "__main__":
     tableCheck(logic.Nand)
     print("Ior: ")
     tableCheck(logic.Ior)
+
+if __name__ == "__main__":
+    printTests()
