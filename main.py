@@ -90,7 +90,8 @@ def testFourBitAddr():
             state1 = itot(i, 4)
             state2 = itot(y, 4)
             addr.setinput(state1, state2, 0)
-            print("%s + %s = %s" % (ttoi(state1), ttoi(state2), ttoi(addr.getoutput())))
+            fmt = (ttoi(state1), ttoi(state2), ttoi(addr.getoutput()))
+            print("%s + %s = %s" % fmt)
 
 if __name__ == "__main__":
     testHalfAddr()
