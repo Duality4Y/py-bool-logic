@@ -1,7 +1,6 @@
 """
     mainly testing out logic with logic tables.
 """
-
 import baseLogic as logic
 
 
@@ -15,6 +14,13 @@ def itot(value, bits):
             rep.append(0)
     # return a tuple of bits and reverse because it's binary.
     return(tuple(rep))
+
+
+def ttoi(tuplerep):
+    value = 0
+    for i, bit in enumerate(tuplerep):
+        value |= (tuplerep[i] << i)
+    return value
 
 
 def checkNot(logic):
@@ -55,21 +61,33 @@ def printTestsLogic():
 def testHalfAddr():
     from Circuits import HalfAddr
     h1 = HalfAddr()
-    table = [(0, 0), (0, 1), (1, 0), (1, 1)]
-    for state in table:
+    print(" A |B |   Co|S ")
+    for i in range(0,4):
+        state = itot(i, 2)
         h1.setinput(state)
         print("%s-->%s" % (state, h1.getoutput()))
+    print("")
 
 
 def testFullAddr():
     from Circuits import FullAddr
     f1 = FullAddr()
+    print(" A |B |Ci|   Co|S ")
     # create a state and test on it.
     for i in range(0, 8):
         state = itot(i, 3)
         f1.setinput(state)
         print("%s-->%s" % (state, f1.getoutput()))
+    print("")
 
+
+def testFourBitAddr():
+    from Circuits import FourBitAddr
+    addr1 = FourBitAddr()
+    addr1.setinput((0, 1, 0, 0), (0, 0, 1, 0), 0)
+    addr1.getoutput()
 
 if __name__ == "__main__":
+    testHalfAddr()
     testFullAddr()
+    testFourBitAddr()

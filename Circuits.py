@@ -1,17 +1,6 @@
 from baseLogic import *
 
 
-class LC(object):
-    def __init__(self):
-        pass
-
-    def setinput(self, input):
-        pass
-
-    def getoutput(self):
-        pass
-
-
 class HalfAddr(object):
     def __init__(self):
         self.input = (0, 0)
@@ -49,3 +38,23 @@ class FullAddr(object):
         cout = sumh2
 
         return(cout, sum)
+
+
+class FourBitAddr(object):
+    def __init__(self):
+        self.inputa = 0
+        self.inputb = 0
+        self.cin = 0
+
+        self.addr1 = FullAddr()
+        self.addr2 = FullAddr()
+        self.addr3 = FullAddr()
+        self.addr4 = FullAddr()
+
+    def setinput(self, inputa, inputb, cin):
+        self.inputa = inputa[::-1]
+        self.inputb = inputb[::-1]
+        self.cin = cin
+
+    def getoutput(self):
+        pass
