@@ -46,9 +46,10 @@ class FourBitAddr(object):
         self.inputb = 0
         self.cin = 0
 
-        self.addrs = []
-        for i in range(0, 4):
-            self.addrs.append(FullAddr())
+        self.addr1 = FullAddr()
+        self.addr2 = FullAddr()
+        self.addr3 = FullAddr()
+        self.addr4 = FullAddr()
 
     def setinput(self, inputa, inputb, cin):
         self.inputa = inputa
@@ -56,12 +57,30 @@ class FourBitAddr(object):
         self.cin = cin
 
     def getoutput(self):
-        sums = [0]
+        sums = []
         carry = self.cin
-        for i, addr in enumerate(self.addrs):
-            signal = (self.inputa[i], self.inputb[i], carry)
-            addr.setinput(signal)
-            carry, sum = addr.getoutput()
-            sums.append(sum)
-        sums[0] = carry
-        return tuple(sums)
+
+        addr1, addr2, addr3, addr4 = (self.addr1, self.addr2,
+                                      self.addr3, self.addr4)
+
+        signal = (self.inputa[0], self.inputb[0], carry)
+        self.addr1.setinput(signal)
+        sum, carry = addr1.getoutput()
+        sums.append(sum)
+
+        signal = (self.inputa[1], self.inputb[1], carry)
+        self.addr2.setinput(signal)
+        sum, carry = addr2.getoutput()
+        sums.append(sum)
+
+        signal = (self.inputa[2], self.inputb[2], carry)
+        self.addr3.setinput(signal)
+        sum, carry = addr3.getoutput()
+        sums.append(sum)
+
+        signal = (self.inputa[3], self.inputb[3], carry)
+        self.addr4.setinput(signal)
+        sum, carry = addr4.getoutput()
+        sums.append(sum)
+        sums.append(carry)
+        return(sums)

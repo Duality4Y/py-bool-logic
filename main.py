@@ -85,11 +85,12 @@ def testFullAddr():
 def testFourBitAddr():
     from Circuits import FourBitAddr
     addr = FourBitAddr()
-    for i in range(0, 32):
-        state = itot(i, 4)
-        addr.setinput(state, state, 0)
-        print("%s+%s=%s" % (ttoi(state), ttoi(state), ttoi(addr.getoutput())))
-    print("")
+    for i in range(0, 16):
+        for y in range(0, 16):
+            state1 = itot(i, 4)
+            state2 = itot(y, 4)
+            addr.setinput(state1, state2, 0)
+            print("%s + %s = %s" % (ttoi(state1), ttoi(state2), ttoi(addr.getoutput())))
 
 if __name__ == "__main__":
     testHalfAddr()
