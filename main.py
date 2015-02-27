@@ -62,7 +62,7 @@ def testHalfAddr():
     from Circuits import HalfAddr
     h1 = HalfAddr()
     print(" A |B |   Co|S ")
-    for i in range(0,4):
+    for i in range(0, 4):
         state = itot(i, 2)
         h1.setinput(state)
         print("%s-->%s" % (state, h1.getoutput()))
@@ -75,6 +75,7 @@ def testFullAddr():
     print(" A |B |Ci|   Co|S ")
     # create a state and test on it.
     for i in range(0, 8):
+        # generate four states
         state = itot(i, 3)
         f1.setinput(state)
         print("%s-->%s" % (state, f1.getoutput()))
@@ -83,9 +84,12 @@ def testFullAddr():
 
 def testFourBitAddr():
     from Circuits import FourBitAddr
-    addr1 = FourBitAddr()
-    addr1.setinput((0, 1, 0, 0), (0, 0, 1, 0), 0)
-    addr1.getoutput()
+    addr = FourBitAddr()
+    for i in range(0, 16):
+        state = itot(i, 4)
+        addr.setinput(state, state, 0)
+        print("%s+%s=%s" % (ttoi(state), ttoi(state), ttoi(addr.getoutput())))
+    print("")
 
 if __name__ == "__main__":
     testHalfAddr()
