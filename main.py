@@ -183,25 +183,30 @@ def testPiPaRegister():
     # once and zero's alternating
     data = 170
 
+    print("data:%s disabled:" % (itot(data, register.length),))
     signal = (itot(data, register.length), enabled)
     register.setinput(signal)
     print(register.getoutput())
 
     enabled = 1
+    print("data:%s enabled:" % (itot(data, register.length),))
     signal = (itot(data, register.length), enabled)
     register.setinput(signal)
     print(register.getoutput())
 
     enabled = 0
     data = 0xF0
+    print("data:%s disabled: " % (itot(data, register.length),))
     signal = (itot(data, register.length), enabled)
     register.setinput(signal)
     print(register.getoutput())
 
+    print("data:%s enabled:" % (itot(data, register.length),))
     enabled = 1
     signal = (itot(data, register.length), enabled)
     register.setinput(signal)
     print(register.getoutput())
+    print("")
 
 
 def testSiPaRegister():
@@ -225,6 +230,25 @@ def testSiPaRegister():
     latch.setinput(signal)
     print(latch.getoutput())
 
+    data = 1
+    enabled = 0
+
+    latch = SiPaRegister()
+    signal = (data, enabled)
+    latch.setinput(signal)
+    print(latch.getoutput())
+
+    data = 0
+    signal = (data, enabled)
+    latch.setinput(signal)
+    print(latch.getoutput())
+
+    data = 1
+    signal = (data, enabled)
+    latch.setinput(signal)
+    print(latch.getoutput())
+    print("")
+
 
 def runTests():
     printTestLogic()
@@ -237,4 +261,5 @@ def runTests():
 if __name__ == "__main__":
     testFourBitAddr()
     testXBitAddr()
-    testSiPaRegister()
+    testPiPaRegister()
+    # testSiPaRegister()
