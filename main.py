@@ -24,8 +24,8 @@ def ttoi(tuplerep):
 
 
 def checkNot(logic):
-    state1 = logic.Not(0)
-    state2 = logic.Not(1)
+    state1 = logic(0)
+    state2 = logic(1)
     print("0 : %d" % (state1))
     print("1 : %d" % (state2))
     print("")
@@ -41,9 +41,9 @@ def tableCheck(gate):
     print("")
 
 
-def printTestsLogic():
+def printTestLogic():
     print("Not:")
-    checkNot(logic)
+    checkNot(logic.Not)
     print("Or: ")
     tableCheck(logic.Or)
     print("And: ")
@@ -61,6 +61,7 @@ def printTestsLogic():
 def testHalfAddr():
     from Circuits import HalfAddr
     h1 = HalfAddr()
+    print("HalfAddr: ")
     print(" A |B |   Co|S ")
     for i in range(0, 4):
         state = itot(i, 2)
@@ -72,6 +73,7 @@ def testHalfAddr():
 def testFullAddr():
     from Circuits import FullAddr
     f1 = FullAddr()
+    print("FullAddr: ")
     print(" A |B |Ci|   Co|S ")
     # create a state and test on it.
     for i in range(0, 8):
@@ -84,31 +86,39 @@ def testFullAddr():
 
 def testFourBitAddr():
     from Circuits import FourBitAddr
+    import random
     addr = FourBitAddr()
+    print("FourBitAddr: ")
     for i in range(0, 16):
-        for y in range(0, 16):
-            state1 = itot(i, 4)
-            state2 = itot(y, 4)
-            addr.setinput(state1, state2, 0)
-            fmt = (ttoi(state1), ttoi(state2), ttoi(addr.getoutput()))
-            print("%s + %s = %s" % fmt)
-
-
-def testXBitAddr():
-    from Circuits import XBitAddr
-    bitlength = 8
-    addr = XBitAddr(bitlength)
-    for i in range(0, (2**bitlength)+1):
-        state1 = itot(1, bitlength)
-        state2 = itot(i, bitlength)
+        state1 = itot(i, 4)
+        state2 = itot(random.randint(0, 17), 4)
         addr.setinput(state1, state2, 0)
         fmt = (ttoi(state1), ttoi(state2), ttoi(addr.getoutput()))
         print("%s + %s = %s" % fmt)
 
 
+def testXBitAddr():
+    from Circuits import XBitAddr
+    import random
+    bitlength = 8
+    addr = XBitAddr(bitlength)
+    print("XbitAddr: ")
+    for i in range(0, bitlength):
+        left, right = (random.randint(0, 2**bitlength),
+                       random.randint(0, 2**bitlength))
+        state1 = itot(left, bitlength)
+        state2 = itot(right, bitlength)
+        addr.setinput(state1, state2, 0)
+        answer = ttoi(addr.getoutput())
+        fmt = (ttoi(state1), ttoi(state2),
+               answer, (answer == (left+right)))
+        print("%s + %s = %s :check:%s" % fmt)
+
+
 def testLatch():
     from Circuits import Latch
     latch = Latch()
+    print("s-r latch: ")
     while(True):
         answer = raw_input("Input (S)et (R)eset (Q)uit:\n").lower()
         if answer == "q":
@@ -125,6 +135,7 @@ def testGatedLatch():
     from Circuits import GatedLatch
     latch = GatedLatch()
     enabled = 0
+    print("gated s-r latch: ")
     while(True):
         answer = raw_input("Input (S)et (R)eset (E)nable (Q)uit: \n").lower()
         if answer == "q":
@@ -144,6 +155,7 @@ def testDataLatch():
     latch = DataLatch()
     enabled = 0
     data = 0
+    print("Data latch: ")
     while(True):
         answer = raw_input("input (D)ata (E)nable (Q)uit: \n").lower()
         if answer == "q":
@@ -161,8 +173,10 @@ def testDataLatch():
 def testPiPaRegister():
     from Circuits import PiPaRegister
     register = PiPaRegister()
+    print("Paralel in paralel out register.")
     enabled = 0
-    data = 170 # once and zero's alternating
+    # once and zero's alternating
+    data = 170
 
     signal = (itot(data, register.length), enabled)
     register.setinput(signal)
@@ -184,5 +198,18 @@ def testPiPaRegister():
     register.setinput(signal)
     print(register.getoutput())
 
+
+def testSiPaRegister():
+    from Circuits import SiPaRegister
+
+
+def runTests():
+    printTestLogic()
+    testHalfAddr()
+    testFullAddr()
+    testFourBitAddr()
+    testXBitAddr()
+
+
 if __name__ == "__main__":
-    testPiPaRegister()
+    testXBitAddr()
