@@ -87,9 +87,10 @@ class FourBitAddr(object):
 
 
 class Latch(object):
+    """implementation of sr latch"""
     def __init__(self):
         self.signal = (0, 0)
-        self.output = (0, 1)
+        self.output = (1, 1)
 
     def setinput(self, signal):
         self.signal = signal
@@ -97,9 +98,6 @@ class Latch(object):
     def getoutput(self):
         a, b = self.signal
         q, qn = self.output
-        # twice because propagation if reset to set.
-        qn = Nand((q, a))
-        q = Nand((qn, b))
         qn = Nand((q, a))
         q = Nand((qn, b))
         self.output = (q, qn)
