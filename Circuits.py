@@ -94,11 +94,11 @@ class Latch(object):
 
     def setinput(self, signal):
         self.signal = signal
-
+    """ nand based so set=setnot and reset is reset not."""
     def getoutput(self):
         a, b = self.signal
         q, qn = self.output
-        qn = Nand((q, a))
-        q = Nand((qn, b))
+        qn = Nand((q, b))
+        q = Nand((qn, a))
         self.output = (q, qn)
         return(self.output)
