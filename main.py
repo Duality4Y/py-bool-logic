@@ -237,4 +237,3 @@ if __name__ == "__main__":
     testFourBitAddr()
     testXBitAddr()
     testPiPaRegister()
-    testSiPaRegister()
