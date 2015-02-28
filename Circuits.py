@@ -9,8 +9,8 @@ class HalfAddr(object):
         self.signal = signal
 
     def getoutput(self):
-        sum = Xor(self.input)
-        cout = And(self.input)
+        sum = Xor(self.signal)
+        cout = And(self.signal)
         return(cout, sum)
 
 
@@ -38,6 +38,35 @@ class FullAddr(object):
         cout = sumh2
 
         return(cout, sum)
+
+
+class XBitAddr(object):
+    def __init__(self, bits):
+        self.inputa = 0
+        self.inputb = 0
+        self.cin = 0
+
+        self.addrs = []
+        for i in range(bits):
+            self.addrs.append(FullAddr())
+
+    def setinput(self, inputa, inputb, cin):
+        self.inputa = inputa
+        self.inputb = inputb
+        self.cin = cin
+
+    def getoutput(self):
+        sums = []
+        carry = self.cin
+
+        for i, addr in enumerate(self.addrs):
+            signal = (self.inputa[i], self.inputb[i], carry)
+            addr.setinput(signal)
+            sum, carry = addr.getoutput()
+            sums.append(sum)
+        sums.append(carry)
+
+        return tuple(sums)
 
 
 class FourBitAddr(object):
@@ -83,7 +112,7 @@ class FourBitAddr(object):
         sum, carry = addr4.getoutput()
         sums.append(sum)
         sums.append(carry)
-        return(sums)
+        return tuple(sums)
 
 
 class Latch(object):

@@ -94,6 +94,18 @@ def testFourBitAddr():
             print("%s + %s = %s" % fmt)
 
 
+def testXBitAddr():
+    from Circuits import XBitAddr
+    bitlength = 8
+    addr = XBitAddr(bitlength)
+    for i in range(0, (2**bitlength)+1):
+        state1 = itot(1, bitlength)
+        state2 = itot(i, bitlength)
+        addr.setinput(state1, state2, 0)
+        fmt = (ttoi(state1), ttoi(state2), ttoi(addr.getoutput()))
+        print("%s + %s = %s" % fmt)
+
+
 def testLatch():
     from Circuits import Latch
     latch = Latch()
@@ -146,4 +158,4 @@ def testDataLatch():
             enabled = logic.Not(enabled)
 
 if __name__ == "__main__":
-    testDataLatch()
+    testXBitAddr()
