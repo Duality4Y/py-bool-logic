@@ -88,13 +88,18 @@ def testFourBitAddr():
     from Circuits import FourBitAddr
     import random
     addr = FourBitAddr()
+    bitlength = 4
     print("FourBitAddr: ")
-    for i in range(0, 16):
-        state1 = itot(i, 4)
-        state2 = itot(random.randint(0, 17), 4)
+    for i in range(0, bitlength):
+        left, right = (random.randint(0, 2**bitlength),
+                       random.randint(0, 2**bitlength))
+        state1 = itot(left, bitlength)
+        state2 = itot(right, bitlength)
         addr.setinput(state1, state2, 0)
-        fmt = (ttoi(state1), ttoi(state2), ttoi(addr.getoutput()))
-        print("%s + %s = %s" % fmt)
+        answer = ttoi(addr.getoutput())
+        fmt = (ttoi(state1), ttoi(state2),
+               answer, (answer == (left+right)))
+        print("%s + %s = %s :check:%s" % fmt)
 
 
 def testXBitAddr():
@@ -201,6 +206,24 @@ def testPiPaRegister():
 
 def testSiPaRegister():
     from Circuits import SiPaRegister
+    
+    data = 1
+    enabled = 1
+
+    latch = SiPaRegister()
+    signal = (data, enabled)
+    latch.setinput(signal)
+    print(latch.getoutput())
+
+    data = 0
+    signal = (data, enabled)
+    latch.setinput(signal)
+    print(latch.getoutput())
+
+    data = 1
+    signal = (data, enabled)
+    latch.setinput(signal)
+    print(latch.getoutput())
 
 
 def runTests():
@@ -212,4 +235,6 @@ def runTests():
 
 
 if __name__ == "__main__":
+    testFourBitAddr()
     testXBitAddr()
+    testSiPaRegister()

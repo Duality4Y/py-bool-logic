@@ -174,9 +174,9 @@ class DataLatch(object):
 
 
 class PiPaRegister(object):
-    """ 
-        8 bit paralel in paralel out register.
-        with optional register length select.
+    """
+    8 bit paralel in paralel out register.
+    with optional register length select.
     """
     def __init__(self, length=8):
         self.length = length
@@ -201,3 +201,33 @@ class PiPaRegister(object):
             self.output.append(latch.getoutput()[0])
 
         return tuple(self.output)
+
+
+class SiPaRegister(object):
+    """
+    8 bit serial in paralel out register.
+    with optiona register length select.
+    """
+    def __init__(self, length=8):
+        self.length = length
+        self.signal = ()
+        self.output = []
+        self.latches = []
+        self.selected = 0
+        for i in range(0, self.length):
+            self.latches.append(DataLatch())
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        data, enabled = self.signal
+
+        self.latches[self.selected].setinput((data, enabled))
+        data, qn = self.latches[self.selected].getoutput()
+        self.output.append(data)
+
+        if self.selected > self.length:
+            self.selected = 0
+
+        return tuple(self.output+([0]*(self.length-len(self.output))))
