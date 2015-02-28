@@ -97,14 +97,8 @@ def testFourBitAddr():
 def testLatch():
     from Circuits import Latch
     latch = Latch()
-    # posibilities = 2
-    # for i in range(0, 2**posibilities):
-    #     state = itot(i, 2)
-    #     latch.setinput(state)
-    #     print(latch.getoutput())
     while(True):
-        answer = ''
-        answer = raw_input("Input |S|et or |R|eset to drop:\n")
+        answer = raw_input("Input (S)et (R)eset (Q)uit:\n").lower()
         if answer == "q":
             break
         elif answer == "s":
@@ -115,5 +109,41 @@ def testLatch():
             print(latch.getoutput())
 
 
+def testGatedLatch():
+    from Circuits import GatedLatch
+    latch = GatedLatch()
+    enabled = 0
+    while(True):
+        answer = raw_input("Input (S)et (R)eset (E)nable (Q)uit: \n").lower()
+        if answer == "q":
+            break
+        elif answer == "s":
+            latch.setinput((1, 0, enabled))
+            print(latch.getoutput())
+        elif answer == "r":
+            latch.setinput((0, 1, enabled))
+            print(latch.getoutput())
+        elif answer == "e":
+            enabled = logic.Not(enabled)
+
+
+def testDataLatch():
+    from Circuits import DataLatch
+    latch = DataLatch()
+    enabled = 0
+    data = 0
+    while(True):
+        answer = raw_input("input (D)ata (E)nable (Q)uit: \n").lower()
+        if answer == "q":
+            break
+        elif answer == "d":
+            answer = raw_input("input 1 or 0 for data: \n").lower()
+            data = eval(answer)
+            latch.setinput((data, enabled))
+            print(latch.getoutput())
+            data = logic.Not(data)
+        elif answer == "e":
+            enabled = logic.Not(enabled)
+
 if __name__ == "__main__":
-    testLatch()
+    testDataLatch()

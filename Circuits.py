@@ -98,7 +98,46 @@ class Latch(object):
     def getoutput(self):
         a, b = self.signal
         q, qn = self.output
-        qn = Nand((q, b))
-        q = Nand((qn, a))
+        qn = Nor((q, b))
+        q = Nor((qn, a))
+        qn = Nor((q, b))
+        q = Nor((qn, a))
         self.output = (q, qn)
         return(self.output)
+
+
+class GatedLatch(object):
+    """ implementation of a Gated sr latch """
+    def __init__(self):
+        self.signal = (0, 0, 0)
+        self.output = (1, 1)
+        self.latch = Latch()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        r, s, e = self.signal
+        a = And((r, e))
+        b = And((s, e))
+        self.latch.setinput((a, b))
+        return self.latch.getoutput()
+
+
+class DataLatch(object):
+    """ implementation of a Data latch """
+    def __init__(self):
+        self.signal = (0, 0)
+        self.output = (1, 1)
+        self.gatedlatch = GatedLatch()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        data, enabled = self.signal
+        r = Not(data)
+        s = data
+        self.gatedlatch.setinput((r, s, enabled))
+        return self.gatedlatch.getoutput()
+
