@@ -100,6 +100,7 @@ def testFourBitAddr():
         fmt = (ttoi(state1), ttoi(state2),
                answer, (answer == (left+right)))
         print("%s + %s = %s :check:%s" % fmt)
+    print("")
 
 
 def testXBitAddr():
@@ -118,6 +119,7 @@ def testXBitAddr():
         fmt = (ttoi(state1), ttoi(state2),
                answer, (answer == (left+right)))
         print("%s + %s = %s :check:%s" % fmt)
+    print("")
 
 
 def testLatch():
@@ -211,41 +213,14 @@ def testPiPaRegister():
 
 def testSiPaRegister():
     from Circuits import SiPaRegister
-    
-    data = 1
+    print("SiPa register: ")
+    latch = SiPaRegister()
+    data = 0
     enabled = 1
-
-    latch = SiPaRegister()
-    signal = (data, enabled)
-    latch.setinput(signal)
+    latch.setinput((data, enabled))
     print(latch.getoutput())
-
-    data = 0
-    signal = (data, enabled)
-    latch.setinput(signal)
-    print(latch.getoutput())
-
     data = 1
-    signal = (data, enabled)
-    latch.setinput(signal)
-    print(latch.getoutput())
-
-    data = 1
-    enabled = 0
-
-    latch = SiPaRegister()
-    signal = (data, enabled)
-    latch.setinput(signal)
-    print(latch.getoutput())
-
-    data = 0
-    signal = (data, enabled)
-    latch.setinput(signal)
-    print(latch.getoutput())
-
-    data = 1
-    signal = (data, enabled)
-    latch.setinput(signal)
+    latch.setinput((data, enabled))
     print(latch.getoutput())
     print("")
 
@@ -262,4 +237,4 @@ if __name__ == "__main__":
     testFourBitAddr()
     testXBitAddr()
     testPiPaRegister()
-    # testSiPaRegister()
+    testSiPaRegister()

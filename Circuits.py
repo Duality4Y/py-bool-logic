@@ -129,8 +129,6 @@ class Latch(object):
         q, qn = self.output
         qn = Nor((q, b))
         q = Nor((qn, a))
-        qn = Nor((q, b))
-        q = Nor((qn, a))
         self.output = (q, qn)
         return(self.output)
 
@@ -201,11 +199,3 @@ class PiPaRegister(object):
             self.output.append(latch.getoutput()[0])
 
         return tuple(self.output)
-
-
-class SiPaRegister(object):
-    """
-    8 bit serial in paralel out register.
-    with optiona register length select.
-    """
-    pass
