@@ -3,10 +3,10 @@ from baseLogic import *
 
 class HalfAddr(object):
     def __init__(self):
-        self.input = (0, 0)
+        self.signal = (0, 0)
 
-    def setinput(self, input):
-        self.input = input
+    def setinput(self, signal):
+        self.signal = signal
 
     def getoutput(self):
         sum = Xor(self.input)
@@ -18,15 +18,15 @@ class FullAddr(object):
     def __init__(self):
         # the circuit has a cin A and B
         # thus three input.s
-        self.input = (0, 0, 0)
+        self.signal = (0, 0, 0)
         self.h1 = HalfAddr()
         self.h2 = HalfAddr()
 
-    def setinput(self, input):
-        self.input = input
+    def setinput(self, signal):
+        self.signal = signal
 
     def getoutput(self):
-        a, b, cin = self.input
+        a, b, cin = self.signal
 
         self.h1.setinput((a, b))
         carryh1, sumh1 = self.h1.getoutput()
@@ -84,3 +84,23 @@ class FourBitAddr(object):
         sums.append(sum)
         sums.append(carry)
         return(sums)
+
+
+class Latch(object):
+    def __init__(self):
+        self.signal = (0, 0)
+        self.output = (0, 1)
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        a, b = self.signal
+        q, qn = self.output
+        # twice because propagation if reset to set.
+        qn = Nand((q, a))
+        q = Nand((qn, b))
+        qn = Nand((q, a))
+        q = Nand((qn, b))
+        self.output = (q, qn)
+        return(self.output)

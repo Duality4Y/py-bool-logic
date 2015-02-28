@@ -93,7 +93,27 @@ def testFourBitAddr():
             fmt = (ttoi(state1), ttoi(state2), ttoi(addr.getoutput()))
             print("%s + %s = %s" % fmt)
 
+
+def testLatch():
+    from Circuits import Latch
+    latch = Latch()
+    # posibilities = 2
+    # for i in range(0, 2**posibilities):
+    #     state = itot(i, 2)
+    #     latch.setinput(state)
+    #     print(latch.getoutput())
+    while(True):
+        answer = ''
+        answer = raw_input("Input |S|et or |R|eset to drop:\n")
+        if answer == "q":
+            break
+        elif answer == "s":
+            latch.setinput((1, 0))
+            print(latch.getoutput())
+        elif answer == "r":
+            latch.setinput((0, 1))
+            print(latch.getoutput())
+
+
 if __name__ == "__main__":
-    testHalfAddr()
-    testFullAddr()
-    testFourBitAddr()
+    testLatch()
