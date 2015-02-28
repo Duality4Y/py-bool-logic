@@ -174,9 +174,12 @@ class DataLatch(object):
 
 
 class PiPaRegister(object):
-    """ 8 bit paralel in paralel out register. """
-    def __init__(self):
-        self.length = 8
+    """ 
+        8 bit paralel in paralel out register.
+        with optional register length select.
+    """
+    def __init__(self, length=8):
+        self.length = length
         self.signal = ()
         self.output = []
 
