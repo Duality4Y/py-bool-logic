@@ -169,4 +169,3 @@ class DataLatch(object):
         s = data
         self.gatedlatch.setinput((r, s, enabled))
         return self.gatedlatch.getoutput()
-
