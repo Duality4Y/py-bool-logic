@@ -157,5 +157,32 @@ def testDataLatch():
         elif answer == "e":
             enabled = logic.Not(enabled)
 
+
+def testPiPaRegister():
+    from Circuits import PiPaRegister
+    register = PiPaRegister()
+    enabled = 0
+    data = 170 # once and zero's alternating
+
+    signal = (itot(data, register.length), enabled)
+    register.setinput(signal)
+    print(register.getoutput())
+
+    enabled = 1
+    signal = (itot(data, register.length), enabled)
+    register.setinput(signal)
+    print(register.getoutput())
+
+    enabled = 0
+    data = 0xF0
+    signal = (itot(data, register.length), enabled)
+    register.setinput(signal)
+    print(register.getoutput())
+
+    enabled = 1
+    signal = (itot(data, register.length), enabled)
+    register.setinput(signal)
+    print(register.getoutput())
+
 if __name__ == "__main__":
-    testXBitAddr()
+    testPiPaRegister()

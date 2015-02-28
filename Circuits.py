@@ -150,7 +150,8 @@ class GatedLatch(object):
         a = And((r, e))
         b = And((s, e))
         self.latch.setinput((a, b))
-        return self.latch.getoutput()
+        self.output = self.latch.getoutput()
+        return self.output
 
 
 class DataLatch(object):
@@ -168,4 +169,32 @@ class DataLatch(object):
         r = Not(data)
         s = data
         self.gatedlatch.setinput((r, s, enabled))
-        return self.gatedlatch.getoutput()
+        self.output = self.gatedlatch.getoutput()
+        return self.output
+
+
+class PiPaRegister(object):
+    """ 8 bit paralel in paralel out register. """
+    def __init__(self):
+        self.length = 8
+        self.signal = ()
+        self.output = []
+
+        self.latches = []
+        for i in range(0, self.length):
+            self.latches.append(DataLatch())
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        self.output = []
+        # last signal dictates wether the data is latched in.
+        data, enabled = self.signal
+
+        for i, latch in enumerate(self.latches):
+            latch.setinput((data[i], enabled))
+            # get the Q bit
+            self.output.append(latch.getoutput()[0])
+
+        return tuple(self.output)
