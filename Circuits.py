@@ -127,8 +127,10 @@ class Latch(object):
     def getoutput(self):
         a, b = self.signal
         q, qn = self.output
+        q = Nor((qn, a))
         qn = Nor((q, b))
         q = Nor((qn, a))
+        qn = Nor((q, b))
         self.output = (q, qn)
         return(self.output)
 
@@ -168,6 +170,28 @@ class DataLatch(object):
         s = data
         self.gatedlatch.setinput((r, s, enabled))
         self.output = self.gatedlatch.getoutput()
+        return self.output
+
+
+class MSDataLatch(object):
+    """ implemenation of a master slave data latch """
+    def __init__(self):
+        self.signal = (0, 0)
+        self.output = []
+        self.master = DataLatch()
+        self.slave = DataLatch()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        data, enabled = self.signal
+        self.master.setinput(self.signal)
+        data, qn = self.master.getoutput()
+        enabled = Not(enabled)
+        signal = (data, enabled)
+        self.slave.setinput(signal)
+        self.output = self.slave.getoutput()
         return self.output
 
 

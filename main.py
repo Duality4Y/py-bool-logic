@@ -225,6 +225,27 @@ def testSiPaRegister():
     print("")
 
 
+def d_latch_vs_dms_latch():
+    from getch import getch
+    import sys
+    from Circuits import DataLatch, MSDataLatch
+    latch = DataLatch()
+    latch2 = MSDataLatch()
+    data, enabled = 1, 0
+    char = ' '
+    while(char != u'q'):
+        if char == u'2':
+            enabled = logic.Not(enabled)
+        elif char == u'1':
+            data = logic.Not(data)
+        latch.setinput((data, enabled))
+        latch2.setinput((data, enabled))
+        fmt = (data, enabled, latch.getoutput(), latch2.getoutput())
+        fmtstr = "\rdata:%s enabled:%s D-Latch:%s MSD-Latch:%s"
+        sys.stdout.write(fmtstr % fmt)
+        char = getch()
+
+
 def runTests():
     printTestLogic()
     testHalfAddr()
@@ -237,3 +258,5 @@ if __name__ == "__main__":
     testFourBitAddr()
     testXBitAddr()
     testPiPaRegister()
+    d_latch_vs_dms_latch()
+    print("")
