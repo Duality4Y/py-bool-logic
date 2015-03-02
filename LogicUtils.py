@@ -50,4 +50,7 @@ def getRandomInts(length, amount=2):
     randomints = []
     for i in range(0, amount):
         randomints.append(random.randint(0, (2**length)-1))
-    return randomints
+    if amount == 1:
+        return randomints[0]
+    else:
+        return randomints

@@ -88,11 +88,10 @@ def testFourBitAddr():
 
 def testXBitAddr():
     from Circuits import XBitAddr
-    import random
-    bitlength = 6 # random.randint(0, 4*8)
+    bitlength = 32
+    print("max integer size: %d" % (bitlength))
     addr = XBitAddr(bitlength)
     print("XbitAddr: ")
-    print("max integer size: %d" % (bitlength))
     # run 20 tests
     for i in range(0, 20):
         left, right = getRandomInts(bitlength)
@@ -222,12 +221,12 @@ def d_latch_vs_dms_latch():
 
 
 def runTests():
-    # printTestLogic()
-    # testHalfAddr()
-    # testFullAddr()
+    printTestLogic()
+    testHalfAddr()
+    testFullAddr()
     testFourBitAddr()
-    # testXBitAddr()
-    # testPiPaRegister()
+    testXBitAddr()
+    testPiPaRegister()
 
 
 if __name__ == "__main__":
