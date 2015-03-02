@@ -160,9 +160,9 @@ def testDataLatch():
             enabled = logic.Not(enabled)
 
 
-def testPiPaRegister():
-    from Circuits import PiPaRegister
-    register = PiPaRegister()
+def testPiPoRegister():
+    from Circuits import PiPoRegister
+    register = PiPoRegister()
     print("Paralel in paralel out register.")
     enabled = 0
     # once and zero's alternating
@@ -194,9 +194,10 @@ def testPiPaRegister():
     print("")
 
 
-def testSiPaRegister():
+def testSiPoRegister():
     from Circuits import SiPaRegister
-    pass
+    while SiPaRegister:
+        pass
 
 
 def d_latch_vs_dms_latch():
@@ -220,13 +221,47 @@ def d_latch_vs_dms_latch():
         char = getch()
 
 
+def sipoTesting():
+    from Circuits import SiPoRegister
+    register = SiPoRegister()
+
+    data, clock = 1, 1
+    register.setinput((data, clock))
+    print(register.getoutput())
+    clock = 0
+    register.setinput((data, clock))
+    print(register.getoutput())
+    
+    data, clock = 0, 1
+    register.setinput((data, clock))
+    print(register.getoutput())
+    clock = 0
+    register.setinput((data, clock))
+    print(register.getoutput())
+
+    data, clock = 1, 1
+    register.setinput((data, clock))
+    print(register.getoutput())
+    clock = 0
+    register.setinput((data, clock))
+    print(register.getoutput())
+
+    data, clock = 0, 1
+    register.setinput((data, clock))
+    print(register.getoutput())
+    clock = 0
+    register.setinput((data, clock))
+    print(register.getoutput())
+
+
 def runTests():
     printTestLogic()
     testHalfAddr()
     testFullAddr()
     testFourBitAddr()
     testXBitAddr()
-    testPiPaRegister()
+    testPiPoRegister()
+    sipoTesting()
 
 
 if __name__ == "__main__":

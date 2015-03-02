@@ -121,9 +121,6 @@ class Latch(object):
         self.signal = (0, 1)
         self.output = (1, 1)
 
-        # run it once to get it in a known state.
-        self.output = self.getoutput()
-
     def setinput(self, signal):
         self.signal = signal
     """ nand based so set=setnot and reset is reset not."""
@@ -198,7 +195,7 @@ class MSDataLatch(object):
         return self.output
 
 
-class PiPaRegister(object):
+class PiPoRegister(object):
     """
     8 bit paralel in paralel out register.
     with optional register length select.
@@ -226,3 +223,39 @@ class PiPaRegister(object):
         self.output = output
         return tuple(self.output)
 
+
+class SiPoRegister(object):
+    """
+    implementation of a serial in paralel out register.
+    """
+    def __init__(self, length=4):
+        self.length = length
+        self.signal = ()
+        self.output = []
+
+        self.latch1 = MSDataLatch()
+        self.latch2 = MSDataLatch()
+        self.latch3 = MSDataLatch()
+        self.latch4 = MSDataLatch()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        output = []
+        data, clock = self.signal
+
+        self.latch1.setinput(self.signal)
+        q, qn = self.latch1.getoutput()
+        output.append(q)
+        self.latch2.setinput((q, clock))
+        q, qn = self.latch2.getoutput()
+        output.append(q)
+        self.latch3.setinput((q, clock))
+        q, qn = self.latch3.getoutput()
+        output.append(q)
+        self.latch4.setinput((q, clock))
+        q, qn = self.latch4.getoutput()
+        output.append(q)
+
+        return tuple(output)

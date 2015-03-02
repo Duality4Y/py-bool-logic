@@ -1,0 +1,14 @@
+{
+    "folders":
+    [
+        {
+            "follow_symlinks": true,
+            "path": "~/py-bool-logic/"
+        }
+    ],
+    "SublimeLinter":
+    {
+        "@python": 2.7
+    }
+}
+
