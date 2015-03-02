@@ -118,8 +118,11 @@ class FourBitAddr(object):
 class Latch(object):
     """implementation of sr latch"""
     def __init__(self):
-        self.signal = (0, 0)
+        self.signal = (0, 1)
         self.output = (1, 1)
+
+        # run it once to get it in a known state.
+        self.output = self.getoutput()
 
     def setinput(self, signal):
         self.signal = signal
@@ -213,13 +216,13 @@ class PiPaRegister(object):
         self.signal = signal
 
     def getoutput(self):
-        self.output = []
-        # last signal dictates wether the data is latched in.
+        output = []
         data, enabled = self.signal
 
         for i, latch in enumerate(self.latches):
             latch.setinput((data[i], enabled))
             # get the Q bit
-            self.output.append(latch.getoutput()[0])
-
+            output.append(latch.getoutput()[0])
+        self.output = output
         return tuple(self.output)
+

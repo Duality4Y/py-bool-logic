@@ -2,25 +2,9 @@
     mainly testing out logic with logic tables.
 """
 import baseLogic as logic
-
-
-def itot(value, bits):
-    """ int to binary tuple representation """
-    rep = []
-    for i in range(bits):
-        if(value & (1 << i)):
-            rep.append(1)
-        else:
-            rep.append(0)
-    # return a tuple of bits and reverse because it's binary.
-    return(tuple(rep))
-
-
-def ttoi(tuplerep):
-    value = 0
-    for i, bit in enumerate(tuplerep):
-        value |= (tuplerep[i] << i)
-    return value
+from LogicUtils import itot
+from LogicUtils import ttoi
+from LogicUtils import getRandomInts
 
 
 def checkNot(logic):
@@ -86,19 +70,18 @@ def testFullAddr():
 
 def testFourBitAddr():
     from Circuits import FourBitAddr
-    import random
     addr = FourBitAddr()
     bitlength = 4
     print("FourBitAddr: ")
     for i in range(0, bitlength):
-        left, right = (random.randint(0, 2**bitlength),
-                       random.randint(0, 2**bitlength))
+        left, right = getRandomInts(bitlength)
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
         addr.setinput(state1, state2, 0)
         answer = ttoi(addr.getoutput())
+        check = (answer == (left+right))
         fmt = (ttoi(state1), ttoi(state2),
-               answer, (answer == (left+right)))
+               answer, check)
         print("%s + %s = %s :check:%s" % fmt)
     print("")
 
@@ -106,12 +89,13 @@ def testFourBitAddr():
 def testXBitAddr():
     from Circuits import XBitAddr
     import random
-    bitlength = 8
+    bitlength = 6 # random.randint(0, 4*8)
     addr = XBitAddr(bitlength)
     print("XbitAddr: ")
-    for i in range(0, bitlength):
-        left, right = (random.randint(0, 2**bitlength),
-                       random.randint(0, 2**bitlength))
+    print("max integer size: %d" % (bitlength))
+    # run 20 tests
+    for i in range(0, 20):
+        left, right = getRandomInts(bitlength)
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
         addr.setinput(state1, state2, 0)
@@ -213,16 +197,7 @@ def testPiPaRegister():
 
 def testSiPaRegister():
     from Circuits import SiPaRegister
-    print("SiPa register: ")
-    latch = SiPaRegister()
-    data = 0
-    enabled = 1
-    latch.setinput((data, enabled))
-    print(latch.getoutput())
-    data = 1
-    latch.setinput((data, enabled))
-    print(latch.getoutput())
-    print("")
+    pass
 
 
 def d_latch_vs_dms_latch():
@@ -247,16 +222,15 @@ def d_latch_vs_dms_latch():
 
 
 def runTests():
-    printTestLogic()
-    testHalfAddr()
-    testFullAddr()
+    # printTestLogic()
+    # testHalfAddr()
+    # testFullAddr()
     testFourBitAddr()
-    testXBitAddr()
+    # testXBitAddr()
+    # testPiPaRegister()
 
 
 if __name__ == "__main__":
-    testFourBitAddr()
-    testXBitAddr()
-    testPiPaRegister()
-    d_latch_vs_dms_latch()
+    runTests()
+    # d_latch_vs_dms_latch()
     print("")
