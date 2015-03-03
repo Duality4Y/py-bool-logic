@@ -155,7 +155,27 @@ class GatedLatch(object):
 
 
 class DataLatch(object):
-    """ implementation of a Data latch """
+    """ implementation of a data latch """
+    def __init__(self):
+        self.signal = (0, 0)
+        self.output = (1, 1)
+        self.latch = Latch()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        data, enabled = self.signal
+        r = Not(data)
+        s = data
+        signal = (r, s)
+        self.latch.setinput(signal)
+        self.output = self.latch.getoutput()
+        return self.output
+
+
+class GatedDataLatch(object):
+    """ implementation of a Gated Data latch """
     def __init__(self):
         self.signal = (0, 0)
         self.output = (1, 1)
@@ -178,21 +198,57 @@ class MSDataLatch(object):
     def __init__(self):
         self.signal = (0, 0)
         self.output = []
-        self.master = DataLatch()
-        self.slave = DataLatch()
+        self.master = GatedDataLatch()
+        self.slave = GatedDataLatch()
 
     def setinput(self, signal):
         self.signal = signal
 
     def getoutput(self):
-        data, enabled = self.signal
+        data, clock = self.signal
         self.master.setinput(self.signal)
         data, qn = self.master.getoutput()
-        enabled = Not(enabled)
-        signal = (data, enabled)
+        clock = Not(clock)
+        signal = (data, clock)
         self.slave.setinput(signal)
         self.output = self.slave.getoutput()
         return self.output
+
+
+class JKFlipFlop(object):
+    """
+    implementation of a j-k flipflop.
+    url: "https://electrosome.com/wp-content/uploads/2013/05/
+          JK-Flip-Flop-using-D-Flip-Flop-Logic-Diagram.jpg"
+    """
+    def __init__(self):
+        self.signal = (0, 0)
+        self.output = (1, 1)
+        self.flipflop = MSDataLatch()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        j, k, clock = self.signal
+        q, qn = self.output
+        k = Not(k)
+        orA = And((j, qn))
+        orB = And((k, q))
+        d = Or((orA, orB))
+        signal = (d, clock)
+        self.flipflop.setinput(signal)
+        self.output = self.flipflop.getoutput()
+        return tuple(self.output)
+
+
+class TFlipFlop(object):
+    """
+    implemenation of a toggle flipflop based on
+    a j-k flipflop
+    """
+    def __init__(self):
+        pass
 
 
 class PiPoRegister(object):
@@ -207,7 +263,7 @@ class PiPoRegister(object):
 
         self.latches = []
         for i in range(0, self.length):
-            self.latches.append(DataLatch())
+            self.latches.append(GatedDataLatch())
 
     def setinput(self, signal):
         self.signal = signal

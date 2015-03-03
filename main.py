@@ -221,34 +221,61 @@ def d_latch_vs_dms_latch():
         char = getch()
 
 
+def testJKFlipflop():
+    from Circuits import JKFlipFlop
+    from getch import getch
+    import sys
+    flipflop = JKFlipFlop()
+    j, k, clock = 0, 0, 0
+    char = ""
+    while(char != u'q'):
+        if(char == u'j'):
+            j = logic.Not(j)
+        elif(char == u'k'):
+            k = logic.Not(k)
+        elif(char == u'c'):
+            clock = logic.Not(clock)
+        signal = (j, k, clock)
+        flipflop.setinput(signal)
+        q, qn, = flipflop.getoutput()
+        fmt = (j, k, clock, q, qn)
+        fmtstr = "\rJ:%s K:%s clock:%s Q:%s Qn:%s"
+        sys.stdout.write(fmtstr % fmt)
+        char = getch()
+
+
+def testTFlipflop():
+    pass
+
+
 def sipoTesting():
     from Circuits import SiPoRegister
     register = SiPoRegister()
 
     data, clock = 1, 1
     register.setinput((data, clock))
-    print(register.getoutput())
+    register.getoutput()
     clock = 0
     register.setinput((data, clock))
     print(register.getoutput())
     
     data, clock = 0, 1
     register.setinput((data, clock))
-    print(register.getoutput())
+    register.getoutput()
     clock = 0
     register.setinput((data, clock))
     print(register.getoutput())
 
     data, clock = 1, 1
     register.setinput((data, clock))
-    print(register.getoutput())
+    register.getoutput()
     clock = 0
     register.setinput((data, clock))
     print(register.getoutput())
 
     data, clock = 0, 1
     register.setinput((data, clock))
-    print(register.getoutput())
+    register.getoutput()
     clock = 0
     register.setinput((data, clock))
     print(register.getoutput())
@@ -267,4 +294,5 @@ def runTests():
 if __name__ == "__main__":
     runTests()
     # d_latch_vs_dms_latch()
+    testJKFlipflop()
     print("")
