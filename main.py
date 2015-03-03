@@ -267,6 +267,30 @@ def testTFlipflop():
         char = getch()
 
 
+def testCounter():
+    from Circuits import Counter
+    from getch import getch
+    import sys
+    counter = Counter(length=8)
+    print("")
+    clock = 0
+    enabled = 1
+    auto = 0
+    char = ""
+    while(char != u'q'):
+        if(char == u'e'):
+            enabled = logic.Not(enabled)
+        elif(char == u'c'):
+            clock = logic.Not(clock)
+        signal = (clock, enabled)
+        counter.setinput(signal)
+        count = counter.getoutput()
+        fmt = (enabled, clock, count)
+        fmtstr = "\rEnabled:%s Clock:%s Count:%s"
+        sys.stdout.write(fmtstr % fmt)
+        char = getch()
+
+
 def sipoTesting():
     from Circuits import SiPoRegister
     register = SiPoRegister()
@@ -277,7 +301,7 @@ def sipoTesting():
     clock = 0
     register.setinput((data, clock))
     print(register.getoutput())
-    
+
     data, clock = 0, 1
     register.setinput((data, clock))
     register.getoutput()
@@ -315,4 +339,5 @@ if __name__ == "__main__":
     # d_latch_vs_dms_latch()
     testJKFlipflop()
     testTFlipflop()
+    testCounter()
     print("")

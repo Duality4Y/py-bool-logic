@@ -263,6 +263,36 @@ class TFlipFlop(object):
         return tuple(self.output)
 
 
+class Counter(object):
+    """
+    implementation of a counter with toggle flipflops
+    """
+    def __init__(self, length=4):
+        self.signal = (0, 0)
+        self.output = []
+        self.flipflops = []
+        self.length = length
+        for i in range(0, self.length):
+            self.flipflops.append(TFlipFlop())
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        self.output = []
+        clock, enabled = self.signal
+
+        for flipflop in self.flipflops:
+            signal = (enabled, clock)
+            flipflop.setinput(signal)
+            q, qn = flipflop.getoutput()
+            clock = qn
+            # replace qn with q for backward counting.
+            self.output.append(qn)
+
+        return tuple(self.output)
+
+
 class PiPoRegister(object):
     """
     8 bit paralel in paralel out register.
