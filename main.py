@@ -227,6 +227,7 @@ def testJKFlipflop():
     import sys
     flipflop = JKFlipFlop()
     j, k, clock = 0, 0, 0
+    print("")
     char = ""
     while(char != u'q'):
         if(char == u'j'):
@@ -245,7 +246,25 @@ def testJKFlipflop():
 
 
 def testTFlipflop():
-    pass
+    from Circuits import TFlipFlop
+    from getch import getch
+    import sys
+    flipflop = TFlipFlop()
+    t, clock = 0, 0
+    print("")
+    char = ""
+    while(char != u'q'):
+        if(char == u't'):
+            t = logic.Not(t)
+        elif(char == u'c'):
+            clock = logic.Not(clock)
+        signal = (t, clock)
+        flipflop.setinput(signal)
+        q, qn, = flipflop.getoutput()
+        fmt = (t, clock, q, qn)
+        fmtstr = "\rT:%s clock:%s q:%s qn:%s"
+        sys.stdout.write(fmtstr % fmt)
+        char = getch()
 
 
 def sipoTesting():
@@ -295,4 +314,5 @@ if __name__ == "__main__":
     runTests()
     # d_latch_vs_dms_latch()
     testJKFlipflop()
+    testTFlipflop()
     print("")

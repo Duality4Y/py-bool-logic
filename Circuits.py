@@ -248,7 +248,19 @@ class TFlipFlop(object):
     a j-k flipflop
     """
     def __init__(self):
-        pass
+        self.signal = (0, 0)
+        self.output = (1, 1)
+        self.flipflop = JKFlipFlop()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        t, clock = self.signal
+        signal = (t, t, clock)
+        self.flipflop.setinput(signal)
+        self.output = self.flipflop.getoutput()
+        return tuple(self.output)
 
 
 class PiPoRegister(object):
