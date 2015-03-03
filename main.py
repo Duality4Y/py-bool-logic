@@ -324,6 +324,19 @@ def sipoTesting():
     print(register.getoutput())
 
 
+def testBitComp():
+    from Circuits import OneBitDigComp
+    comparator = OneBitDigComp()
+    print("comparator")
+    for i in range(0, 4):
+        state = itot(i, 2)
+        comparator.setinput(state)
+        output = comparator.getoutput()
+        fmt = (state, output)
+        fmtstr = "input:%s output:%s"
+        print(fmtstr % fmt)
+
+
 def runTests():
     printTestLogic()
     testHalfAddr()
@@ -340,4 +353,5 @@ if __name__ == "__main__":
     testJKFlipflop()
     testTFlipflop()
     testCounter()
+    testBitComp()
     print("")

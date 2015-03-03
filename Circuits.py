@@ -357,3 +357,23 @@ class SiPoRegister(object):
         output.append(q)
 
         return tuple(output)
+
+
+class OneBitDigComp(object):
+    """
+    implemenatation of a 1 bit digital comparator.
+    """
+    def __init__(self):
+        self.signal = (0, 0)
+        self.output = []
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        a, b = self.signal
+        c = And((Not(a), b))
+        d = Not(Or((And((Not(a), b)), And((a, Not(b))))))
+        e = And((a, Not(b)))
+        self.output = (c, d, e)
+        return tuple(self.output)
