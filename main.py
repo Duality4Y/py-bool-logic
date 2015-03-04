@@ -345,13 +345,13 @@ def runTests():
     testXBitAddr()
     testPiPoRegister()
     sipoTesting()
+    testBitComp()
 
 
 if __name__ == "__main__":
     runTests()
-    # d_latch_vs_dms_latch()
+    d_latch_vs_dms_latch()
     testJKFlipflop()
     testTFlipflop()
     testCounter()
-    testBitComp()
     print("")

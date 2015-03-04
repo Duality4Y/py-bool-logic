@@ -361,7 +361,7 @@ class SiPoRegister(object):
 
 class OneBitDigComp(object):
     """
-    implemenatation of a 1 bit digital comparator.
+    implemenatation of a 1 bit magnitude comparator.
     """
     def __init__(self):
         self.signal = (0, 0)
@@ -377,3 +377,18 @@ class OneBitDigComp(object):
         e = And((a, Not(b)))
         self.output = (c, d, e)
         return tuple(self.output)
+
+
+class CascadeBitDigComp(object):
+    """
+    implementation of a x bit cascadeable
+    digital magnitude comparator.
+    """
+    def __init__(self):
+        pass
+
+    def setinput(self):
+        pass
+
+    def getoutput(self):
+        pass
