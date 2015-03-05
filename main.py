@@ -194,18 +194,13 @@ def testPiPoRegister():
     print("")
 
 
-def testSiPoRegister():
-    from Circuits import SiPaRegister
-    while SiPaRegister:
-        pass
-
-
 def d_latch_vs_dms_latch():
     from getch import getch
     import sys
     from Circuits import DataLatch, MSDataLatch
     latch = DataLatch()
     latch2 = MSDataLatch()
+    print("\ndifference between latch, and flipflop")
     data, enabled = 1, 0
     char = ' '
     while(char != u'q'):
@@ -227,6 +222,7 @@ def testJKFlipflop():
     import sys
     flipflop = JKFlipFlop()
     j, k, clock = 0, 0, 0
+    print("\nJK-flipflop")
     print("")
     char = ""
     while(char != u'q'):
@@ -251,6 +247,7 @@ def testTFlipflop():
     import sys
     flipflop = TFlipFlop()
     t, clock = 0, 0
+    print("\nToggle FlipFlop")
     print("")
     char = ""
     while(char != u'q'):
@@ -272,10 +269,10 @@ def testCounter():
     from getch import getch
     import sys
     counter = Counter(length=8)
+    print("\ncounter:")
     print("")
     clock = 0
     enabled = 1
-    auto = 0
     char = ""
     while(char != u'q'):
         if(char == u'e'):
@@ -294,7 +291,8 @@ def testCounter():
 def sipoTesting():
     from Circuits import SiPoRegister
     register = SiPoRegister()
-
+    print("serial in parallel out")
+    print("")
     data, clock = 1, 1
     register.setinput((data, clock))
     register.getoutput()
