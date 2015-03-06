@@ -39,7 +39,7 @@ def printTestLogic():
     print("Nand: ")
     tableCheck(logic.Nand)
     print("Ior: ")
-    tableCheck(logic.Ior)
+    tableCheck(logic.Xnor)
 
 
 def testHalfAddr():

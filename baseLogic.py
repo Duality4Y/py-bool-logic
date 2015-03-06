@@ -37,6 +37,6 @@ def Nor(signal):
     return Not(Or(signal))
 
 
-def Ior(signal):
+def Xnor(signal):
     """ return signal !(A xor B) (inclusive or) """
     return Not(Xor(signal))
