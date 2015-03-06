@@ -415,3 +415,32 @@ class OneBitEquComp(object):
         out = And(signal)
         self.output = out
         return self.output
+
+
+class FourBitEquComp(object):
+    """
+    implementation of a 4 bit equality comparator.
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+
+        self.length = 4
+        self.comparators = []
+        for i in range(0, self.length):
+            self.comparators.append(OneBitEquComp())
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        A, B, Ei = self.signal
+        for i, comparator in enumerate(self.comparators):
+            signal = (A[i], B[i], Ei)
+            comparator.setinput(signal)
+            Ei = comparator.getoutput()
+        self.output = Ei
+        return self.output
+
+"""
+"""
