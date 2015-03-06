@@ -45,6 +45,17 @@ def testConversion(start=0):
             break
 
 
+def generateTableFile(numin, numout, tablefile='table.txt'):
+    instates = []
+    for i in range(0, 2**numin):
+        instates.append(itot(i, numin))
+    with open(tablefile, 'w') as f:
+        head = '|A  |B  |C  |Gi |Ei |Li  |Go  |Eo  |Lo \n'
+        f.write(head)
+        for state in instates:
+            f.write(str(state).replace(' ', '  ')+' '+str((' ', )*numout)+'\n')
+
+
 def getRandomInts(length, amount=2):
     """ return <amount> random ints with <length> """
     randomints = []

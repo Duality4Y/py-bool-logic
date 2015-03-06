@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 """
     mainly testing out logic with logic tables.
 """
@@ -404,8 +405,10 @@ def runTests():
     testXBitAddr()
     testPiPoRegister()
     sipoTesting()
+
     testBitComp()
     testEquComp()
+
     d_latch_vs_dms_latch()
     testJKFlipflop()
     testTFlipflop()
