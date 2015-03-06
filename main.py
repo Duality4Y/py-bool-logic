@@ -335,6 +335,22 @@ def testBitComp():
         print(fmtstr % fmt)
 
 
+def testEquComp():
+    from Circuits import OneBitEquComp
+    comparator = OneBitEquComp()
+    numInputs = 3
+    print("On bit equality tester.")
+    for i in range(0, 2**numInputs):
+        # flip the tuple returned by itot, because
+        # the first bit is MSB (most significant bit)
+        state = itot(i, numInputs)[::-1]
+        comparator.setinput(state)
+        output = comparator.getoutput()
+        fmt = (state, output)
+        fmtstr = ("%s:%s")
+        print(fmtstr % fmt)
+
+
 def runTests():
     printTestLogic()
     testHalfAddr()
@@ -344,12 +360,13 @@ def runTests():
     testPiPoRegister()
     sipoTesting()
     testBitComp()
-
-
-if __name__ == "__main__":
-    runTests()
     d_latch_vs_dms_latch()
     testJKFlipflop()
     testTFlipflop()
     testCounter()
+
+
+if __name__ == "__main__":
+    # runTests()
+    testEquComp()
     print("")

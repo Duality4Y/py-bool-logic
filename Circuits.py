@@ -392,3 +392,26 @@ class CascadeBitDigComp(object):
 
     def getoutput(self):
         pass
+
+
+class OneBitEquComp(object):
+    """
+    implementation of a cascadable 1 bit equ comparator.
+    http://web.stcloudstate.edu/pkjha/CSCI220/MagnitudeComparator.pdf
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        Ai, Bi, Ei = self.signal
+        signal = (Ai, Bi)
+        A = Xnor(signal)
+        B = Ei
+        signal = (A, B)
+        out = And(signal)
+        self.output = out
+        return self.output
