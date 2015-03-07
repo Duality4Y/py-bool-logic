@@ -24,14 +24,6 @@
 			}
 		},
 		{
-			"file": "py-bool-logic-project.sublime-project",
-			"settings":
-			{
-				"buffer_size": 130,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "Circuits.py",
 			"settings":
 			{
@@ -51,7 +43,7 @@
 			"file": "LogicUtils.py",
 			"settings":
 			{
-				"buffer_size": 1474,
+				"buffer_size": 1659,
 				"line_ending": "Unix"
 			}
 		}
@@ -148,6 +140,7 @@
 	],
 	"file_history":
 	[
+		"/home/robert/py-bool-logic/py-bool-logic-project.sublime-project",
 		"/home/robert/.config/sublime-text-3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
 		"/home/robert/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
 		"/home/robert/.config/sublime-text-3/Packages/User/Python.sublime-settings",
@@ -274,8 +267,7 @@
 		"/home/robert/projects/atmega16-ledmatrix/matrix-serial-pixel-drawing/makefile",
 		"/home/robert/projects/atmega16-ledmatrix/matrix-serial-pixel-drawing/main.c",
 		"/home/robert/projects/atmega16-ledmatrix/matrix-scrolling-text/makefile",
-		"/home/robert/projects/atmega16-ledmatrix/matrix-scrolling-text/font.h",
-		"/home/robert/projects/atmega16-ledmatrix/matrix-scrolling-text/matrix.h"
+		"/home/robert/projects/atmega16-ledmatrix/matrix-scrolling-text/font.h"
 	],
 	"find":
 	{
@@ -358,7 +350,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -385,43 +377,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1653.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "py-bool-logic-project.sublime-project",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 130,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								121,
-								121
-							]
-						],
-						"settings":
-						{
-							"hasHeader": false,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 399.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "Circuits.py",
 					"semi_transient": false,
 					"settings":
@@ -451,7 +414,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "baseLogic.py",
 					"semi_transient": false,
 					"settings":
@@ -477,24 +440,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "LogicUtils.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1474,
+						"buffer_size": 1659,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1147,
-								1147
+								1309,
+								1309
 							]
 						],
 						"settings":
@@ -504,10 +467,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 530.0,
+						"translation.y": 264.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

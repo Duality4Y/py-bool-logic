@@ -45,13 +45,14 @@ def testConversion(start=0):
             break
 
 
-def generateTableFile(numin, numout, tablefile='table.txt'):
+def generateTableFile(numin, numout, head=None, tablefile='table.txt'):
     instates = []
     for i in range(0, 2**numin):
-        instates.append(itot(i, numin))
+        instates.append(itot(i, numin)[::-1])
     with open(tablefile, 'w') as f:
-        head = '|A  |B  |C  |Gi |Ei |Li  |Go  |Eo  |Lo \n'
-        f.write(head)
+        if head:
+            # head = '|A  |B  |Gi |Ei |Li  |Go  |Eo  |Lo \n'
+            f.write(head+'\n')
         for state in instates:
             f.write(str(state).replace(' ', '  ')+' '+str((' ', )*numout)+'\n')
 
