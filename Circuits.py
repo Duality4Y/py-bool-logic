@@ -442,5 +442,29 @@ class FourBitEquComp(object):
         self.output = Ei
         return self.output
 
+
 """
+implementation of cascadable magnitude comparator logic.
 """
+
+
+class EquComparator(object):
+    """
+    1 bit cascadable equality comparator.
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        Ai, Bi, Gi = self.signal
+        A = And((Ai, Not(Bi)))
+        B = And((Ai, Gi))
+        C = And((Bi, Not(Gi)))
+        AB = Or((A, B))
+        output = Or((AB, C))
+        self.output = output
+        return tuple(self.output)

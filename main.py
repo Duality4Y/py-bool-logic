@@ -397,6 +397,12 @@ def testFourBitEquComp():
     print(fmtstr % fmt)
 
 
+def testEquComparator():
+    from Circuits import EquComparator
+    print("EquCompartatro:")
+    print(EquComparator)
+
+
 def runTests():
     printTestLogic()
     testHalfAddr()
@@ -418,4 +424,5 @@ def runTests():
 if __name__ == "__main__":
     # runTests()
     testFourBitEquComp()
+    testEquComparator()
     print("")
