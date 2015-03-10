@@ -41,10 +41,10 @@ def printTestLogic():
     tableCheck(logic.Xnor)
 
 
-def testHalfAddr():
-    from Circuits import HalfAddr
-    h1 = HalfAddr()
-    print("HalfAddr: ")
+def testHalfadder():
+    from Circuits import Halfadder
+    h1 = Halfadder()
+    print("Halfadder: ")
     print(" A |B |   Co|S ")
     for i in range(0, 4):
         state = itot(i, 2)
@@ -53,10 +53,10 @@ def testHalfAddr():
     print("")
 
 
-def testFullAddr():
-    from Circuits import FullAddr
-    f1 = FullAddr()
-    print("FullAddr: ")
+def testFulladder():
+    from Circuits import Fulladder
+    f1 = Fulladder()
+    print("Fulladder: ")
     print(" A |B |Ci|   Co|S ")
     # create a state and test on it.
     for i in range(0, 8):
@@ -67,61 +67,37 @@ def testFullAddr():
     print("")
 
 
-def testFourBitAddr():
-    from Circuits import FourBitAddr
-    addr = FourBitAddr()
+def testFourBitadder():
+    from Circuits import FourBitadder
+    adder = FourBitadder()
     bitlength = 4
-    print("FourBitAddr: Addition")
+    print("FourBitadder: Addition")
     for i in range(0, bitlength):
         left, right = getRandomInts(bitlength)
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
-        addr.setinput(state1, state2, 0)
-        answer = ttoi(addr.getoutput())
+        adder.setinput(state1, state2, 0)
+        answer = ttoi(adder.getoutput())
         check = (answer == (left+right))
         fmt = (ttoi(state1), ttoi(state2),
                answer, check)
         print("%s + %s = %s :check:%s" % fmt)
-    print("Subtraction:")
-    for i in range(0, bitlength):
-        left, right = getRandomInts(bitlength)
-        state1 = itot(left, bitlength)
-        state2 = itot(right, bitlength)
-        if(right > left):
-            addr.setinput(invertTuple(state1), state2, 1)
-        else:
-            addr.setinput(state1, invertTuple(state2), 1)
-        output = addr.getoutput()
-        # if(output[bitlength]):
-        #     answer = -ttoi(output[:bitlength])
-        # else:
-        answer = ttoi(output[:bitlength])
-        check = (answer == (left - right))
-        fmt = (left, right,
-               answer, check)
-        print("%s - %s = %s :check:%s" % fmt)
-        print(output)
-    # print(left, right)
-    # left = invertTuple(left)
-    # print(left, right)
-    # addr.setinput(left, right, 1)
-    # print(addr.getoutput())
     print("")
 
 
-def testXBitAddr():
-    from Circuits import XBitAddr
-    bitlength = 32
+def testXBitadder():
+    from Circuits import XBitadder
+    bitlength = 8
     print("max integer size: %d" % (bitlength))
-    addr = XBitAddr(bitlength)
-    print("XbitAddr: ")
+    adder = XBitadder(bitlength)
+    print("Xbitadder: ")
     # run 20 tests
     for i in range(0, 20):
         left, right = getRandomInts(bitlength)
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
-        addr.setinput(state1, state2, 0)
-        answer = ttoi(addr.getoutput())
+        adder.setinput(state1, state2, 0)
+        answer = ttoi(adder.getoutput())
         fmt = (ttoi(state1), ttoi(state2),
                answer, (answer == (left+right)))
         print("%s + %s = %s :check:%s" % fmt)
@@ -427,10 +403,10 @@ def testEquComparator():
 
 def runTests():
     printTestLogic()
-    testHalfAddr()
-    testFullAddr()
-    testFourBitAddr()
-    testXBitAddr()
+    testHalfadder()
+    testFulladder()
+    testFourBitadder()
+    testXBitadder()
     testPiPoRegister()
     sipoTesting()
 

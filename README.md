@@ -5,6 +5,6 @@ implemented basic logic gates like:
 And, Or, Xor, Nand, Nor, Ior (inclussive or)
 
 implemented circuits:
-halfaddr
-fulladdr
-4bitaddr
+halfadder
+fulladder
+4bitadder

@@ -7,7 +7,8 @@ import LogicTests as test
 
 if __name__ == "__main__":
     # runTests()
-    test.testFourBitAddr()
+    test.testFourBitadder()
+    test.testXBitadder()
     # test.testFourBitEquComp()
     # test.testEquComparator()
     print("")

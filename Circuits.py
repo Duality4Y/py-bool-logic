@@ -2,7 +2,7 @@ from baseLogic import *
 from LogicUtils import *
 
 
-class HalfAddr(object):
+class HalfAdder(object):
     def __init__(self):
         self.signal = (0, 0)
 
@@ -15,13 +15,18 @@ class HalfAddr(object):
         return(cout, sum)
 
 
-class FullAddr(object):
+class HalfSubtractor(object):
+    def __init__(self):
+        pass
+
+
+class FullAdder(object):
     def __init__(self):
         # the circuit has a cin A and B
         # thus three input.s
         self.signal = (0, 0, 0)
-        self.h1 = HalfAddr()
-        self.h2 = HalfAddr()
+        self.h1 = HalfAdder()
+        self.h2 = HalfAdder()
 
     def setinput(self, signal):
         self.signal = signal
@@ -35,30 +40,31 @@ class FullAddr(object):
         cout = Or((cp1, cp2))
 
         return (cout, sum)
-        # a, b, cin = self.signal
-
-        # self.h1.setinput((a, b))
-        # carry1, sumh1 = self.h1.getoutput()
-
-        # self.h2.setinput((sumh1, cin))
-        # carry2, sumh2 = self.h2.getoutput()
-
-        # cout = Xor((carry1, carry2))
-        # sum = sumh2
-
-        # return(cout, sum)
 
 
-class XBitAddr(object):
+class FullSubtractor(object):
+    def __init__(self):
+        self.signal = ()
+        self.h1 = HalfAdder()
+        self.h2 = HalfAdder()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        a, b, bwin = self.signal
+
+
+class XBitAdder(object):
     def __init__(self, bits):
         self.inputa = 0
         self.inputb = 0
         self.cin = 0
         self.length = bits
 
-        self.addrs = []
+        self.adders = []
         for i in range(bits):
-            self.addrs.append(FullAddr())
+            self.adders.append(Fulladder())
 
     def setinput(self, inputa, inputb, cin):
         self.inputa = inputa
@@ -69,26 +75,26 @@ class XBitAddr(object):
         sums = []
         carry = self.cin
 
-        for i, addr in enumerate(self.addrs):
+        for i, adder in enumerate(self.adders):
             signal = (self.inputa[i], self.inputb[i], carry)
-            addr.setinput(signal)
-            sum, carry = addr.getoutput()
+            adder.setinput(signal)
+            carry, sum = adder.getoutput()
             sums.append(sum)
         sums.append(carry)
 
         return tuple(sums)
 
 
-class FourBitAddr(object):
+class FourBitadder(object):
     def __init__(self):
         self.inputa = 0
         self.inputb = 0
         self.cin = 0
 
-        self.addr1 = FullAddr()
-        self.addr2 = FullAddr()
-        self.addr3 = FullAddr()
-        self.addr4 = FullAddr()
+        self.adder1 = Fulladder()
+        self.adder2 = Fulladder()
+        self.adder3 = Fulladder()
+        self.adder4 = Fulladder()
 
     def setinput(self, inputa, inputb, cin):
         self.inputa = inputa
@@ -99,27 +105,27 @@ class FourBitAddr(object):
         sums = []
         carry = self.cin
 
-        addr1, addr2, addr3, addr4 = (self.addr1, self.addr2,
-                                      self.addr3, self.addr4)
+        adder1, adder2, adder3, adder4 = (self.adder1, self.adder2,
+                                      self.adder3, self.adder4)
 
         signal = (self.inputa[0], self.inputb[0], carry)
-        self.addr1.setinput(signal)
-        carry, sum = addr1.getoutput()
+        self.adder1.setinput(signal)
+        carry, sum = adder1.getoutput()
         sums.append(sum)
 
         signal = (self.inputa[1], self.inputb[1], carry)
-        self.addr2.setinput(signal)
-        carry, sum = addr2.getoutput()
+        self.adder2.setinput(signal)
+        carry, sum = adder2.getoutput()
         sums.append(sum)
 
         signal = (self.inputa[2], self.inputb[2], carry)
-        self.addr3.setinput(signal)
-        carry, sum = addr3.getoutput()
+        self.adder3.setinput(signal)
+        carry, sum = adder3.getoutput()
         sums.append(sum)
 
         signal = (self.inputa[3], self.inputb[3], carry)
-        self.addr4.setinput(signal)
-        carry, sum = addr4.getoutput()
+        self.adder4.setinput(signal)
+        carry, sum = adder4.getoutput()
         sums.append(sum)
         sums.append(carry)
         return tuple(sums)
