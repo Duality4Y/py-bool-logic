@@ -3,11 +3,11 @@
     mainly testing out logic with logic tables.
 """
 
-from LogicTests import *
+import LogicTests as test
 
 if __name__ == "__main__":
     # runTests()
-    testFourBitAddr()
-    testFourBitEquComp()
-    testEquComparator()
+    test.testFourBitAddr()
+    test.testFourBitEquComp()
+    test.testEquComparator()
     print("")
