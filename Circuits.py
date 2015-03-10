@@ -16,6 +16,10 @@ class HalfAdder(object):
 
 
 class HalfSubtractor(object):
+    """
+    Subtractor series based on:
+    http://www.vidyarthiplus.in/2012/01/digital-logic-circuitshalf-and-full.html#.VP9lI59jPJ8
+    """
     def __init__(self):
         self.signal = ()
 
@@ -62,14 +66,22 @@ class FullSubtractor(object):
         self.signal = signal
 
     def getoutput(self):
-        print self.signal
         a, b, bwin = self.signal
-        self.sub1.setinput((b, bwin))
-        bwo1, pd = self.sub1.getoutput()
-        self.sub2.setinput((pd, a))
-        bwo2, d = self.sub2.getoutput()
-        bout = Or((bwo2, bwo1)
-        return (bout, d)
+        d = Xor((Xor((a, b)), bwin))
+        bpa = And((bwin, b))
+        bpb = And((b, Not(a)))
+        bpc = And((bwin, Not(a)))
+        bout = Or((Or((bpa, bpb)), bpc))
+        return(bout, d)
+
+
+class FourBitSubtractor(object):
+    def __init__(self):
+        self.signal = 0
+        self.sub1 = FullSubtractor()
+        self.sub2 = FullSubtractor()
+        self.sub3 = FullSubtractor()
+        self.sub4 = FullSubtractor()
 
 
 class XBitAdder(object):
@@ -81,7 +93,7 @@ class XBitAdder(object):
 
         self.adders = []
         for i in range(bits):
-            self.adders.append(Fulladder())
+            self.adders.append(FullAdder())
 
     def setinput(self, inputa, inputb, cin):
         self.inputa = inputa
@@ -108,10 +120,10 @@ class FourBitadder(object):
         self.inputb = 0
         self.cin = 0
 
-        self.adder1 = Fulladder()
-        self.adder2 = Fulladder()
-        self.adder3 = Fulladder()
-        self.adder4 = Fulladder()
+        self.adder1 = FullAdder()
+        self.adder2 = FullAdder()
+        self.adder3 = FullAdder()
+        self.adder4 = FullAdder()
 
     def setinput(self, inputa, inputb, cin):
         self.inputa = inputa
@@ -123,7 +135,7 @@ class FourBitadder(object):
         carry = self.cin
 
         adder1, adder2, adder3, adder4 = (self.adder1, self.adder2,
-                                      self.adder3, self.adder4)
+                                          self.adder3, self.adder4)
 
         signal = (self.inputa[0], self.inputb[0], carry)
         self.adder1.setinput(signal)

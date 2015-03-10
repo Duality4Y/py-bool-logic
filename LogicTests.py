@@ -86,10 +86,10 @@ def testFourBitadder():
 
 
 def testXBitadder():
-    from Circuits import XBitadder
+    from Circuits import XBitAdder
     bitlength = 8
     print("max integer size: %d" % (bitlength))
-    adder = XBitadder(bitlength)
+    adder = XBitAdder(bitlength)
     print("Xbitadder: ")
     # run 20 tests
     for i in range(0, 20):
