@@ -14,10 +14,15 @@ def itot(value, bits):
 
 
 def ttoi(tuplerep):
+    """ binary tuple representation to int"""
     value = 0
     for i, bit in enumerate(tuplerep):
         value |= (tuplerep[i] << i)
     return value
+
+
+def invertTuple(tuplerep):
+    pass
 
 
 def testTupleConversion(amount):
