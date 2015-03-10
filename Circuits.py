@@ -1,4 +1,5 @@
 from baseLogic import *
+from LogicUtils import *
 
 
 class HalfAddr(object):
@@ -27,17 +28,25 @@ class FullAddr(object):
 
     def getoutput(self):
         a, b, cin = self.signal
+        sp = Xor((a, b))
+        sum = Xor((sp, cin))
+        cp1 = And((a, b))
+        cp2 = And((sp, cin))
+        cout = Or((cp1, cp2))
 
-        self.h1.setinput((a, b))
-        carryh1, sumh1 = self.h1.getoutput()
+        return (cout, sum)
+        # a, b, cin = self.signal
 
-        self.h2.setinput((sumh1, cin))
-        carryh2, sumh2 = self.h2.getoutput()
+        # self.h1.setinput((a, b))
+        # carry1, sumh1 = self.h1.getoutput()
 
-        sum = Or((carryh1, carryh2))
-        cout = sumh2
+        # self.h2.setinput((sumh1, cin))
+        # carry2, sumh2 = self.h2.getoutput()
 
-        return(cout, sum)
+        # cout = Xor((carry1, carry2))
+        # sum = sumh2
+
+        # return(cout, sum)
 
 
 class XBitAddr(object):
@@ -45,6 +54,7 @@ class XBitAddr(object):
         self.inputa = 0
         self.inputb = 0
         self.cin = 0
+        self.length = bits
 
         self.addrs = []
         for i in range(bits):
@@ -94,22 +104,22 @@ class FourBitAddr(object):
 
         signal = (self.inputa[0], self.inputb[0], carry)
         self.addr1.setinput(signal)
-        sum, carry = addr1.getoutput()
+        carry, sum = addr1.getoutput()
         sums.append(sum)
 
         signal = (self.inputa[1], self.inputb[1], carry)
         self.addr2.setinput(signal)
-        sum, carry = addr2.getoutput()
+        carry, sum = addr2.getoutput()
         sums.append(sum)
 
         signal = (self.inputa[2], self.inputb[2], carry)
         self.addr3.setinput(signal)
-        sum, carry = addr3.getoutput()
+        carry, sum = addr3.getoutput()
         sums.append(sum)
 
         signal = (self.inputa[3], self.inputb[3], carry)
         self.addr4.setinput(signal)
-        sum, carry = addr4.getoutput()
+        carry, sum = addr4.getoutput()
         sums.append(sum)
         sums.append(carry)
         return tuple(sums)
@@ -377,21 +387,6 @@ class OneBitDigComp(object):
         e = And((a, Not(b)))
         self.output = (c, d, e)
         return tuple(self.output)
-
-
-class CascadeBitDigComp(object):
-    """
-    implementation of a x bit cascadeable
-    digital magnitude comparator.
-    """
-    def __init__(self):
-        pass
-
-    def setinput(self):
-        pass
-
-    def getoutput(self):
-        pass
 
 
 class OneBitEquComp(object):

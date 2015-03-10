@@ -22,7 +22,13 @@ def ttoi(tuplerep):
 
 
 def invertTuple(tuplerep):
-    pass
+    rep = []
+    for value in tuplerep:
+        if value:
+            rep.append(0)
+        else:
+            rep.append(1)
+    return tuple(rep)
 
 
 def testTupleConversion(amount):

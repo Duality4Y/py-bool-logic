@@ -3,6 +3,7 @@ import baseLogic as logic
 from LogicUtils import itot
 from LogicUtils import ttoi
 from LogicUtils import getRandomInts
+from LogicUtils import invertTuple
 
 
 def checkNot(logic):
@@ -70,7 +71,7 @@ def testFourBitAddr():
     from Circuits import FourBitAddr
     addr = FourBitAddr()
     bitlength = 4
-    print("FourBitAddr: addition")
+    print("FourBitAddr: Addition")
     for i in range(0, bitlength):
         left, right = getRandomInts(bitlength)
         state1 = itot(left, bitlength)
@@ -81,17 +82,30 @@ def testFourBitAddr():
         fmt = (ttoi(state1), ttoi(state2),
                answer, check)
         print("%s + %s = %s :check:%s" % fmt)
-    print("FourBitAddr: Subtraction")
+    print("Subtraction:")
     for i in range(0, bitlength):
         left, right = getRandomInts(bitlength)
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
-        addr.setinput(state1, state2, 1)
-        answer = ttoi(addr.getoutput())
+        if(right > left):
+            addr.setinput(invertTuple(state1), state2, 1)
+        else:
+            addr.setinput(state1, invertTuple(state2), 1)
+        output = addr.getoutput()
+        # if(output[bitlength]):
+        #     answer = -ttoi(output[:bitlength])
+        # else:
+        answer = ttoi(output[:bitlength])
         check = (answer == (left - right))
-        fmt = (ttoi(state1), ttoi(state2),
+        fmt = (left, right,
                answer, check)
-        print("%s - %s = %s check: %s" % fmt)
+        print("%s - %s = %s :check:%s" % fmt)
+        print(output)
+    # print(left, right)
+    # left = invertTuple(left)
+    # print(left, right)
+    # addr.setinput(left, right, 1)
+    # print(addr.getoutput())
     print("")
 
 
