@@ -17,7 +17,17 @@ class HalfAdder(object):
 
 class HalfSubtractor(object):
     def __init__(self):
-        pass
+        self.signal = ()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        # Bwi borrow in.
+        a, b = self.signal
+        D = Xor((a, b))
+        B = And((Not(a), b))
+        return (B, D)
 
 
 class FullAdder(object):
@@ -44,15 +54,22 @@ class FullAdder(object):
 
 class FullSubtractor(object):
     def __init__(self):
-        self.signal = ()
-        self.h1 = HalfAdder()
-        self.h2 = HalfAdder()
+        self.signal = (0, 0, 0)
+        self.sub1 = HalfSubtractor()
+        self.sub2 = HalfSubtractor()
 
     def setinput(self, signal):
         self.signal = signal
 
     def getoutput(self):
+        print self.signal
         a, b, bwin = self.signal
+        self.sub1.setinput((b, bwin))
+        bwo1, pd = self.sub1.getoutput()
+        self.sub2.setinput((pd, a))
+        bwo2, d = self.sub2.getoutput()
+        bout = Or((bwo2, bwo1)
+        return (bout, d)
 
 
 class XBitAdder(object):
