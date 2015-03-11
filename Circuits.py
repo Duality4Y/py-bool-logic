@@ -88,14 +88,14 @@ class FourBitSubtractor(object):
     def setinput(self, a, b, bwin):
         self.inputa = a
         self.inputb = b
-        self.bwin
+        self.bwin = bwin
 
     def getoutput(self):
         sub1, sub2, sub3, sub4 = self.sub1, self.sub2, self.sub3, self.sub4
         sums = []
-        a, b, bwin = self.bwin
+        a, b = self.inputa, self.inputb
 
-        signal = (a[0], b[0], bwin)
+        signal = (a[0], b[0], self.bwin)
         sub1.setinput(signal)
         bwin, sum = sub1.getoutput()
         sums.append(sum)
@@ -114,10 +114,9 @@ class FourBitSubtractor(object):
         sub4.setinput(signal)
         bwin, sum = sub4.getoutput()
         sums.append(sum)
-        sums.append(bwin)
 
         output = tuple(sums)
-        return output
+        return(output, bwin,)
 
 
 class XBitAdder(object):
