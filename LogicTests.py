@@ -104,6 +104,30 @@ def testXBitadder():
     print("")
 
 
+def testSubtractor():
+    import Circuits as cir
+    import LogicUtils as util
+    subtractor = cir.FourBitSubtractor()
+    for i in range(0, 2**bitlength):
+        left, right = util.getRandomInts(bitlength)
+        state1 = util.itot(left, bitlength)
+        state2 = util.itot(right, bitlength)
+        subtractor.setinput(state1, state2, 0)
+        output = subtractor.getoutput()
+        # check signednes
+        if output[1]:
+            # if signed do this for the right negative number
+            # because if you don't you get to deal with unsigned number.
+            # and thus have overflow, and thus not really good to check for
+            # human readers, unless you like to think about it ofcourse .
+            answer = -(util.ttoi(util.invertTuple(output[0])+1))
+        else:
+            answer = (util.ttoi(output[0]))
+        fmt = (left, right, answer)
+        fmtstr = "%s - %s = %s" % fmt
+        print(fmtstr)
+
+
 def testLatch():
     from Circuits import Latch
     latch = Latch()
