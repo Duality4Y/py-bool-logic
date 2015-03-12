@@ -77,7 +77,7 @@ def testFourBitadder():
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
         adder.setinput(state1, state2, 0)
-        answer = ttoi(adder.getoutput())
+        answer = ttoi(adder.getoutput()[0])
         check = (answer == (left+right))
         fmt = (ttoi(state1), ttoi(state2),
                answer, check)
@@ -108,6 +108,7 @@ def testSubtractor():
     import Circuits as cir
     import LogicUtils as util
     subtractor = cir.FourBitSubtractor()
+    bitlength = 4
     for i in range(0, 2**bitlength):
         left, right = util.getRandomInts(bitlength)
         state1 = util.itot(left, bitlength)
@@ -120,7 +121,7 @@ def testSubtractor():
             # because if you don't you get to deal with unsigned number.
             # and thus have overflow, and thus not really good to check for
             # human readers, unless you like to think about it ofcourse .
-            answer = -(util.ttoi(util.invertTuple(output[0])+1))
+            answer = -(util.ttoi(util.invertTuple(output[0]))+1)
         else:
             answer = (util.ttoi(output[0]))
         fmt = (left, right, answer)
