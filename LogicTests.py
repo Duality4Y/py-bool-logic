@@ -77,11 +77,20 @@ def testFourBitadder():
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
         adder.setinput(state1, state2, 0)
-        answer = ttoi(adder.getoutput()[0])
+        output = adder.getoutput()
+        if output[1]:
+            overflow = True
+        else:
+            overflow = False
+        answer = ttoi(output[0])
         check = (answer == (left+right))
         fmt = (ttoi(state1), ttoi(state2),
                answer, check)
-        print("%s + %s = %s :check:%s" % fmt)
+        if overflow:
+            fmtstr = "%s + %s = %s :check:%s number overflow"
+        else:
+            fmtstr = "%s + %s = %s :check:%s"
+        print(fmtstr % fmt)
     print("")
 
 

@@ -194,9 +194,6 @@ class FourBitadder(object):
         carry, sum = adder4.getoutput()
         sums.append(sum)
 
-        for i, bit in enumerate(sums):
-            sums[i] = Xor((bit, carry))
-
         output = tuple(sums)
         return(output, carry,)
 
