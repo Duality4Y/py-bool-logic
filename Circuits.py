@@ -95,10 +95,6 @@ class FourBitSubtractor(object):
         sums = []
         a, b = self.inputa, self.inputb
 
-        # just do subtractions later there is some logic to check agains
-        # bwin that if bwin = 1 then number is signed and thus returned
-        # inverted +self.bwin
-
         signal = (a[0], b[0], self.bwin)
         sub1.setinput(signal)
         bwin, sum = sub1.getoutput()
@@ -118,10 +114,6 @@ class FourBitSubtractor(object):
         sub4.setinput(signal)
         bwin, sum = sub4.getoutput()
         sums.append(sum)
-
-        # logic that applies signed ness if borrow in
-        for i, bit in enumerate(sums):
-            sums[i] = Nand((bit, self.bwin))
 
         output = tuple(sums)
         return(output, bwin,)
@@ -175,12 +167,14 @@ class FourBitadder(object):
 
     def getoutput(self):
         sums = []
-        carry = self.cin
 
         adder1, adder2, adder3, adder4 = (self.adder1, self.adder2,
                                           self.adder3, self.adder4)
+        self.inputa = list(self.inputa)
+        for i, bit in enumerate(self.inputa):
+            self.inputa[i] = Xor((bit, self.cin))
 
-        signal = (self.inputa[0], self.inputb[0], carry)
+        signal = (self.inputa[0], self.inputb[0], self.cin)
         self.adder1.setinput(signal)
         carry, sum = adder1.getoutput()
         sums.append(sum)
@@ -199,8 +193,12 @@ class FourBitadder(object):
         self.adder4.setinput(signal)
         carry, sum = adder4.getoutput()
         sums.append(sum)
-        sums.append(carry)
-        return tuple(sums)
+
+        for i, bit in enumerate(sums):
+            sums[i] = Xor((bit, carry))
+
+        output = tuple(sums)
+        return(output, carry,)
 
 
 class Latch(object):
@@ -211,7 +209,7 @@ class Latch(object):
 
     def setinput(self, signal):
         self.signal = signal
-    """ nand based so set=setnot and reset is reset not."""
+    """ Or based so 1 for set and 1 for reset. """
     def getoutput(self):
         a, b = self.signal
         q, qn = self.output
