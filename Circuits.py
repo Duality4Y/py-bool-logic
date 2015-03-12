@@ -95,6 +95,10 @@ class FourBitSubtractor(object):
         sums = []
         a, b = self.inputa, self.inputb
 
+        # just do subtractions later there is some logic to check agains
+        # bwin that if bwin = 1 then number is signed and thus returned
+        # inverted +self.bwin
+
         signal = (a[0], b[0], self.bwin)
         sub1.setinput(signal)
         bwin, sum = sub1.getoutput()
@@ -114,6 +118,10 @@ class FourBitSubtractor(object):
         sub4.setinput(signal)
         bwin, sum = sub4.getoutput()
         sums.append(sum)
+
+        # logic that applies signed ness if borrow in
+        for i, bit in enumerate(sums):
+            sums[i] = Nand((bit, self.bwin))
 
         output = tuple(sums)
         return(output, bwin,)
