@@ -129,6 +129,23 @@ class XBitSubtractor(object):
         for i in range(bits):
             self.subtractors.append(FullSubtractor())
 
+    def setinput(self, inputa, inputb, bin):
+        self.inputa = inputa
+        self.inputb = inputb
+        self.bin = bin
+
+    def getoutput(self):
+        sums = []
+        borrow = self.bin
+
+        for i, subtractor in enumerate(self.subtractors):
+            signal = (self.inputa[i], self.inputb[i], borrow)
+            subtractor.setinput(signal)
+            borrow, sum = subtractor.getouput()
+            sums.append(sum)
+
+        return tuple(sums)
+
 
 class XBitAdder(object):
     def __init__(self, bits):

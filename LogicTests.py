@@ -3,7 +3,6 @@ import baseLogic as logic
 from LogicUtils import itot
 from LogicUtils import ttoi
 from LogicUtils import getRandomInts
-from LogicUtils import invertTuple
 
 
 def checkNot(logic):
@@ -41,7 +40,7 @@ def printTestLogic():
     tableCheck(logic.Xnor)
 
 
-def testHalfadder():
+def testHalfAdder():
     from Circuits import HalfAdder
     h1 = HalfAdder()
     print("Halfadder: ")
@@ -101,7 +100,7 @@ def testXBitAdder():
     adder = XBitAdder(bitlength)
     print("Xbitadder: ")
     # run 20 tests
-    for i in range(0, 20):
+    for i in range(0, 6):
         left, right = getRandomInts(bitlength)
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
@@ -117,6 +116,18 @@ def testXBitSubtractor():
     from Circuits import XBitSubtractor
     bitlength = 8
     print("integer size: %s" % bitlength)
+    subtractor = XBitSubtractor(bitlength)
+    print("XBitSubtractor")
+    for i in range(0, 6):
+        left, right = getRandomInts(bitlength)
+        state1 = itot(left, bitlength)
+        state2 = itot(right, bitlength)
+        subtractor.setinput(state1, state2, 0)
+        answer = ttoi(subtractor.getoutput())
+        fmt = (ttoi(state1), ttoi(state2),
+               answer, (answer == (left-right)))
+        print("%s - %s = %s :check:%s" % fmt)
+    print("")
 
 
 def testSubtractor():
@@ -124,6 +135,7 @@ def testSubtractor():
     import LogicUtils as util
     subtractor = cir.FourBitSubtractor()
     bitlength = 4
+    print("FourBitSubtractor: ")
     print("printing signed representation:")
     for i in range(0, 5):
         left, right = util.getRandomInts(bitlength)
@@ -154,6 +166,7 @@ def testSubtractor():
         fmt = (left, right, answer)
         fmtstr = "%s - %s = %s" % fmt
         print(fmtstr)
+    print("")
 
 
 def testLatch():
@@ -455,10 +468,10 @@ def testEquComparator():
 
 def runTests():
     printTestLogic()
-    testHalfadder()
-    testFulladder()
-    testFourBitadder()
-    testXBitadder()
+    testHalfAdder()
+    testFullAdder()
+    testFourBitAdder()
+    testXBitAdder()
     testPiPoRegister()
     sipoTesting()
 
