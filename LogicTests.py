@@ -478,7 +478,16 @@ def testFourBitEquComp():
 def testEquComparator():
     from Circuits import EquComparator
     print("EquCompartatro:")
-    print(EquComparator)
+    length = 3
+    comparator = EquComparator()
+    print("input: output:")
+    for i in range(0, 2**3):
+        state = itot(i, 3)
+        comparator.setinput(state)
+        output = comparator.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s >> %s" % fmt
+        print(fmtstr)
 
 
 def runTests():

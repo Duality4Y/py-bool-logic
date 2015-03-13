@@ -562,4 +562,4 @@ class EquComparator(object):
         AB = Or((A, B))
         output = Or((AB, C))
         self.output = output
-        return tuple(self.output)
+        return (self.output)
