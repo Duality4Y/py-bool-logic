@@ -3,6 +3,7 @@ import baseLogic as logic
 from LogicUtils import itot
 from LogicUtils import ttoi
 from LogicUtils import getRandomInts
+from LogicUtils import invertTuple
 
 
 def checkNot(logic):
@@ -105,10 +106,13 @@ def testXBitAdder():
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
         adder.setinput(state1, state2, 0)
-        answer = ttoi(adder.getoutput())
+        answer = ttoi(adder.getoutput()[0])
         fmt = (ttoi(state1), ttoi(state2),
                answer, (answer == (left+right)))
-        print("%s + %s = %s :check:%s" % fmt)
+        if adder.getoutput()[1]:
+            print("%s + %s = %s :check:%s integer overflow" % fmt)
+        else:
+            print("%s + %s = %s :check:%s" % fmt)
     print("")
 
 
@@ -117,30 +121,41 @@ def testXBitSubtractor():
     bitlength = 8
     print("integer size: %s" % bitlength)
     subtractor = XBitSubtractor(bitlength)
-    print("XBitSubtractor")
+    print("XBitSubtractor unsigned: ")
     for i in range(0, 6):
         left, right = getRandomInts(bitlength)
         state1 = itot(left, bitlength)
         state2 = itot(right, bitlength)
         subtractor.setinput(state1, state2, 0)
-        answer = ttoi(subtractor.getoutput())
-        fmt = (ttoi(state1), ttoi(state2),
-               answer, (answer == (left-right)))
-        print("%s - %s = %s :check:%s" % fmt)
+        answer = ttoi(subtractor.getoutput()[0])
+        fmt = (ttoi(state1), ttoi(state2), answer)
+        print("%s - %s = %s" % fmt)
+    print("signed: ")
+    for i in range(0, 6):
+        left, right = getRandomInts(bitlength)
+        state1 = itot(left, bitlength)
+        state2 = itot(right, bitlength)
+        subtractor.setinput(state1, state2, 0)
+        output = subtractor.getoutput()
+        if output[1]:
+            answer = -(ttoi(invertTuple(output[0]))+1)
+        else:
+            answer = ttoi(output[0])
+        fmt = (ttoi(state1), ttoi(state2), answer)
+        print("%s - %s = %s " % fmt)
     print("")
 
 
 def testSubtractor():
     import Circuits as cir
-    import LogicUtils as util
     subtractor = cir.FourBitSubtractor()
     bitlength = 4
     print("FourBitSubtractor: ")
     print("printing signed representation:")
     for i in range(0, 5):
-        left, right = util.getRandomInts(bitlength)
-        state1 = util.itot(left, bitlength)
-        state2 = util.itot(right, bitlength)
+        left, right = getRandomInts(bitlength)
+        state1 = itot(left, bitlength)
+        state2 = itot(right, bitlength)
         subtractor.setinput(state1, state2, 0)
         output = subtractor.getoutput()
         # check signednes
@@ -149,17 +164,17 @@ def testSubtractor():
             # because if you don't you get to deal with unsigned number.
             # and thus have overflow, and thus not really good to check for
             # human readers, unless you like to think about it ofcourse .
-            answer = -(util.ttoi(util.invertTuple(output[0]))+1)
+            answer = -(ttoi(invertTuple(output[0]))+1)
         else:
-            answer = (util.ttoi(output[0]))
+            answer = (ttoi(output[0]))
         fmt = (left, right, answer)
         fmtstr = "%s - %s = %s" % fmt
         print(fmtstr)
     print("printing unsigned representation: ")
     for i in range(0, 5):
-        left, right = util.getRandomInts(bitlength)
-        state1 = util.itot(left, bitlength)
-        state2 = util.itot(right, bitlength)
+        left, right = getRandomInts(bitlength)
+        state1 = itot(left, bitlength)
+        state2 = itot(right, bitlength)
         subtractor.setinput(state1, state2, 0)
         output = subtractor.getoutput()
         answer = ttoi(output[0])

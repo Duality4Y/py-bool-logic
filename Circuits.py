@@ -141,10 +141,10 @@ class XBitSubtractor(object):
         for i, subtractor in enumerate(self.subtractors):
             signal = (self.inputa[i], self.inputb[i], borrow)
             subtractor.setinput(signal)
-            borrow, sum = subtractor.getouput()
+            borrow, sum = subtractor.getoutput()
             sums.append(sum)
 
-        return tuple(sums)
+        return tuple(sums), borrow
 
 
 class XBitAdder(object):
@@ -172,9 +172,8 @@ class XBitAdder(object):
             adder.setinput(signal)
             carry, sum = adder.getoutput()
             sums.append(sum)
-        sums.append(carry)
 
-        return tuple(sums)
+        return tuple(sums), carry
 
 
 class FourBitAdder(object):
