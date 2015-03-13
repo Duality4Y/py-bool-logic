@@ -119,6 +119,17 @@ class FourBitSubtractor(object):
         return(output, bwin,)
 
 
+class XBitSubtractor(object):
+    def __init__(self, bits):
+        self.inputa = 0
+        self.inputb = 0
+        self.bin = 0
+        self.length = bits
+        self.subtractors = []
+        for i in range(bits):
+            self.subtractors.append(FullSubtractor())
+
+
 class XBitAdder(object):
     def __init__(self, bits):
         self.inputa = 0
@@ -149,7 +160,7 @@ class XBitAdder(object):
         return tuple(sums)
 
 
-class FourBitadder(object):
+class FourBitAdder(object):
     def __init__(self):
         self.inputa = 0
         self.inputb = 0

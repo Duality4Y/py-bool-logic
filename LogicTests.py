@@ -42,8 +42,8 @@ def printTestLogic():
 
 
 def testHalfadder():
-    from Circuits import Halfadder
-    h1 = Halfadder()
+    from Circuits import HalfAdder
+    h1 = HalfAdder()
     print("Halfadder: ")
     print(" A |B |   Co|S ")
     for i in range(0, 4):
@@ -53,9 +53,9 @@ def testHalfadder():
     print("")
 
 
-def testFulladder():
-    from Circuits import Fulladder
-    f1 = Fulladder()
+def testFullAdder():
+    from Circuits import FullAdder
+    f1 = FullAdder()
     print("Fulladder: ")
     print(" A |B |Ci|   Co|S ")
     # create a state and test on it.
@@ -67,9 +67,9 @@ def testFulladder():
     print("")
 
 
-def testFourBitadder():
-    from Circuits import FourBitadder
-    adder = FourBitadder()
+def testFourBitAdder():
+    from Circuits import FourBitAdder
+    adder = FourBitAdder()
     bitlength = 4
     print("FourBitadder: Addition")
     for i in range(0, bitlength):
@@ -94,7 +94,7 @@ def testFourBitadder():
     print("")
 
 
-def testXBitadder():
+def testXBitAdder():
     from Circuits import XBitAdder
     bitlength = 8
     print("max integer size: %d" % (bitlength))
@@ -113,12 +113,19 @@ def testXBitadder():
     print("")
 
 
+def testXBitSubtractor():
+    from Circuits import XBitSubtractor
+    bitlength = 8
+    print("integer size: %s" % bitlength)
+
+
 def testSubtractor():
     import Circuits as cir
     import LogicUtils as util
     subtractor = cir.FourBitSubtractor()
     bitlength = 4
-    for i in range(0, 2**bitlength):
+    print("printing signed representation:")
+    for i in range(0, 5):
         left, right = util.getRandomInts(bitlength)
         state1 = util.itot(left, bitlength)
         state2 = util.itot(right, bitlength)
@@ -133,6 +140,17 @@ def testSubtractor():
             answer = -(util.ttoi(util.invertTuple(output[0]))+1)
         else:
             answer = (util.ttoi(output[0]))
+        fmt = (left, right, answer)
+        fmtstr = "%s - %s = %s" % fmt
+        print(fmtstr)
+    print("printing unsigned representation: ")
+    for i in range(0, 5):
+        left, right = util.getRandomInts(bitlength)
+        state1 = util.itot(left, bitlength)
+        state2 = util.itot(right, bitlength)
+        subtractor.setinput(state1, state2, 0)
+        output = subtractor.getoutput()
+        answer = ttoi(output[0])
         fmt = (left, right, answer)
         fmtstr = "%s - %s = %s" % fmt
         print(fmtstr)
