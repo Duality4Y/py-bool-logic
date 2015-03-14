@@ -469,75 +469,6 @@ class SiPoRegister(object):
         return tuple(output)
 
 
-class OneBitDigComp(object):
-    """
-    implemenatation of a 1 bit magnitude comparator.
-    """
-    def __init__(self):
-        self.signal = (0, 0)
-        self.output = []
-
-    def setinput(self, signal):
-        self.signal = signal
-
-    def getoutput(self):
-        a, b = self.signal
-        c = And((Not(a), b))
-        d = Not(Or((And((Not(a), b)), And((a, Not(b))))))
-        e = And((a, Not(b)))
-        self.output = (c, d, e)
-        return tuple(self.output)
-
-
-class OneBitEquComp(object):
-    """
-    implementation of a cascadable 1 bit equ comparator.
-    http://web.stcloudstate.edu/pkjha/CSCI220/MagnitudeComparator.pdf
-    """
-    def __init__(self):
-        self.signal = ()
-        self.output = ()
-
-    def setinput(self, signal):
-        self.signal = signal
-
-    def getoutput(self):
-        Ai, Bi, Ei = self.signal
-        signal = (Ai, Bi)
-        A = Xnor(signal)
-        B = Ei
-        signal = (A, B)
-        out = And(signal)
-        self.output = out
-        return self.output
-
-
-class FourBitEquComp(object):
-    """
-    implementation of a 4 bit equality comparator.
-    """
-    def __init__(self):
-        self.signal = ()
-        self.output = ()
-
-        self.length = 4
-        self.comparators = []
-        for i in range(0, self.length):
-            self.comparators.append(OneBitEquComp())
-
-    def setinput(self, signal):
-        self.signal = signal
-
-    def getoutput(self):
-        A, B, Ei = self.signal
-        for i, comparator in enumerate(self.comparators):
-            signal = (A[i], B[i], Ei)
-            comparator.setinput(signal)
-            Ei = comparator.getoutput()
-        self.output = Ei
-        return self.output
-
-
 """
 implementation of cascadable magnitude comparator logic.
 """
@@ -555,11 +486,8 @@ class EquComparator(object):
         self.signal = signal
 
     def getoutput(self):
-        Ai, Bi, Gi = self.signal
-        A = And((Ai, Not(Bi)))
-        B = And((Ai, Gi))
-        C = And((Bi, Not(Gi)))
-        AB = Or((A, B))
-        output = Or((AB, C))
-        self.output = output
-        return (self.output)
+        Ai, Bi, Ei = self.signal
+        C = Xnor((Ai, Bi))
+        Eo = And((C, Ei))
+        self.output = (Eo)
+        return self.output

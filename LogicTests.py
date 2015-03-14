@@ -401,88 +401,16 @@ def sipoTesting():
     print(register.getoutput())
 
 
-def testBitComp():
-    from Circuits import OneBitDigComp
-    comparator = OneBitDigComp()
-    print("comparator")
-    for i in range(0, 4):
-        state = itot(i, 2)
-        comparator.setinput(state)
-        output = comparator.getoutput()
-        fmt = (state, output)
-        fmtstr = "input:%s output:%s"
-        print(fmtstr % fmt)
-
-
-def testEquComp():
-    from Circuits import OneBitEquComp
-    comparator = OneBitEquComp()
-    numInputs = 3
-    print("On bit equality tester.")
-    for i in range(0, 2**numInputs):
-        # flip the tuple returned by itot, because
-        # the first bit is MSB (most significant bit)
-        state = itot(i, numInputs)[::-1]
-        comparator.setinput(state)
-        output = comparator.getoutput()
-        fmt = (state, output)
-        fmtstr = ("%s:%s")
-        print(fmtstr % fmt)
-
-
-def testFourBitEquComp():
-    from Circuits import FourBitEquComp
-    comparator = FourBitEquComp()
-
-    state1 = (0, 0, 1, 0)
-    state2 = (0, 1, 0, 1)
-    Ei = 0
-    signal = (state1, state2, Ei)
-    comparator.setinput(signal)
-    output = comparator.getoutput()
-    fmt = (state1, state2, Ei, output)
-    fmtstr = ("S1:%s S2:%s Ei:%s Eo:%s")
-    print(fmtstr % fmt)
-
-    state1 = (0, 0, 1, 0)
-    state2 = (0, 1, 0, 1)
-    Ei = 1
-    signal = (state1, state2, Ei)
-    comparator.setinput(signal)
-    output = comparator.getoutput()
-    fmt = (state1, state2, Ei, output)
-    fmtstr = ("S1:%s S2:%s Ei:%s Eo:%s")
-    print(fmtstr % fmt)
-
-    state1 = (0, 1, 0, 1)
-    state2 = (0, 1, 0, 1)
-    Ei = 0
-    signal = (state1, state2, Ei)
-    comparator.setinput(signal)
-    output = comparator.getoutput()
-    fmt = (state1, state2, Ei, output)
-    fmtstr = ("S1:%s S2:%s Ei:%s Eo:%s")
-    print(fmtstr % fmt)
-
-    state1 = (0, 1, 0, 1)
-    state2 = (0, 1, 0, 1)
-    Ei = 1
-    signal = (state1, state2, Ei)
-    comparator.setinput(signal)
-    output = comparator.getoutput()
-    fmt = (state1, state2, Ei, output)
-    fmtstr = ("S1:%s S2:%s Ei:%s Eo:%s")
-    print(fmtstr % fmt)
-
-
 def testEquComparator():
     from Circuits import EquComparator
-    print("EquCompartatro:")
+    print("Equality comparator:")
+    # or the number of inputs.
     length = 3
     comparator = EquComparator()
     print("input: output:")
-    for i in range(0, 2**3):
-        state = itot(i, 3)
+    print(" Ai|Bi|Ei    Eo")
+    for i in range(0, 2**length):
+        state = itot(i, length)
         comparator.setinput(state)
         output = comparator.getoutput()
         fmt = (state, output)
@@ -498,10 +426,6 @@ def runTests():
     testXBitAdder()
     testPiPoRegister()
     sipoTesting()
-
-    testBitComp()
-    testEquComp()
-
     d_latch_vs_dms_latch()
     testJKFlipflop()
     testTFlipflop()
