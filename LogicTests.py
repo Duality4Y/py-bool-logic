@@ -418,8 +418,27 @@ def testEquComparator():
         print(fmtstr)
 
 
-def testCascadableEquComparator():
+def testFourBitEquComparator():
+    """
+        A test of a four bit equality comparator,
+        made with cascadable comparators.
+    """
     from Circuits import FourBitEquComparator
+    print("Four Bit Equality comparator")
+    comparator = FourBitEquComparator()
+    bitlength = 4
+    enabled = 1
+    for a in range(0, 2**bitlength):
+        for b in range(0, 2**bitlength):
+            state1 = itot(a, bitlength)
+            state2 = itot(b, bitlength)
+            signal = (state1, state2, enabled)
+            comparator.setinput(signal)
+            output = comparator.getoutput()
+            if output:
+                fmt = (ttoi(state1), ttoi(state2), bool(output))
+                fmtstr = "%s == %s : %s"
+                print(fmtstr % fmt)
 
 
 def runTests():

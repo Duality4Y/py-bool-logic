@@ -9,5 +9,6 @@ if __name__ == "__main__":
     # runTests()
     # test.testFourBitEquComp()
     test.testEquComparator()
+    test.testFourBitEquComparator()
     # test.testEquComparator()
     print("")

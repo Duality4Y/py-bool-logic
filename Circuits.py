@@ -493,5 +493,35 @@ class EquComparator(object):
         return self.output
 
 
-class FourBitEQuComparator(object):
-    pass
+class FourBitEquComparator(object):
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+        self.comp1 = EquComparator()
+        self.comp2 = EquComparator()
+        self.comp3 = EquComparator()
+        self.comp4 = EquComparator()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        A, B, Ei = self.signal
+
+        signal = (A[0], B[0], Ei)
+        self.comp1.setinput(signal)
+        Ei = self.comp1.getoutput()
+
+        signal = (A[1], B[1], Ei)
+        self.comp2.setinput(signal)
+        Ei = self.comp2.getoutput()
+
+        signal = (A[2], B[2], Ei)
+        self.comp3.setinput(signal)
+        Ei = self.comp3.getoutput()
+
+        signal = (A[3], B[3], Ei)
+        self.comp4.setinput(signal)
+        self.output = self.comp4.getoutput()
+
+        return self.output
