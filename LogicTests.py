@@ -418,6 +418,10 @@ def testEquComparator():
         print(fmtstr)
 
 
+def testCascadableEquComparator():
+    from Circuits import FourBitEquComparator
+
+
 def runTests():
     printTestLogic()
     testHalfAdder()

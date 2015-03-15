@@ -491,3 +491,7 @@ class EquComparator(object):
         Eo = And((C, Ei))
         self.output = (Eo)
         return self.output
+
+
+class FourBitEQuComparator(object):
+    pass
