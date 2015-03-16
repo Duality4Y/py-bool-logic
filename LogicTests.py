@@ -462,7 +462,6 @@ def testGreaterThenComparator():
 
 def testFourBitGreaterThenComparator():
     from Circuits import FourBitGreaterComparator
-    import random
     print(" A > B comparator: ")
     comparator = FourBitGreaterComparator()
     bitlength = 4
