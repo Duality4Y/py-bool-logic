@@ -506,7 +506,46 @@ class GreaterThenComparator(object):
 
     def getoutput(self):
         Ai, Bi, Gi = self.signal
-        first = And((Not(Ai), Not(Bi)))
+        first = And((And((Ai, Not(Bi))), Gi))
+        second = And((And((Ai, Not(Bi))), Not(Gi)))
+        self.output = Or((first, second))
+        return self.output
+
+
+class FourBitGreaterComparator(object):
+    """
+    4 bit magnitude comparator A > B
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = 1
+        self.comp1 = GreaterThenComparator()
+        self.comp2 = GreaterThenComparator()
+        self.comp3 = GreaterThenComparator()
+        self.comp4 = GreaterThenComparator()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        A, B, Gi = self.signal
+
+        signal = (A[3], B[3], Gi)
+        self.comp1.setinput(signal)
+        Gi = self.comp1.getoutput()
+
+        signal = (A[2], B[2], Gi)
+        self.comp2.setinput(signal)
+        Gi = self.comp2.getoutput()
+
+        signal = (A[1], B[1], Gi)
+        self.comp3.setinput(signal)
+        Gi = self.comp3.getoutput()
+
+        signal = (A[0], B[0], Gi)
+        self.comp4.setinput(signal)
+        Gi = self.comp4.getoutput()
+        self.output = Gi
         return self.output
 
 

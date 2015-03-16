@@ -460,6 +460,25 @@ def testGreaterThenComparator():
     print("")
 
 
+def testFourBitGreaterThenComparator():
+    from Circuits import FourBitGreaterComparator
+    import random
+    print(" A > B comparator: ")
+    comparator = FourBitGreaterComparator()
+    bitlength = 4
+    enabled = 1
+    for a in range(0, 5):
+        for b in range(0, 5):
+            state1 = itot(a, bitlength)
+            state2 = itot(b, bitlength)
+            signal = (state1, state2, enabled)
+            comparator.setinput(signal)
+            output = comparator.getoutput()
+            fmt = (ttoi(state1), ttoi(state2), bool(output))
+            fmtstr = "%s > %s : %s"
+            print(fmtstr % fmt)
+
+
 def runTests():
     printTestLogic()
     testHalfAdder()
