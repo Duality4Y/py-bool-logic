@@ -416,6 +416,7 @@ def testEquComparator():
         fmt = (state, output)
         fmtstr = "%s >> %s" % fmt
         print(fmtstr)
+    print("")
 
 
 def testFourBitEquComparator():
@@ -439,6 +440,24 @@ def testFourBitEquComparator():
                 fmt = (ttoi(state1), ttoi(state2), bool(output))
                 fmtstr = "%s == %s : %s"
                 print(fmtstr % fmt)
+    print("")
+
+
+def testGreaterThenComparator():
+    from Circuits import GreaterThenComparator
+    print("A > B comparator:")
+    length = 3
+    comparator = GreaterThenComparator()
+    print("input: output:")
+    print(" Ai|Bi|Gi    Go")
+    for i in range(0, 2**length):
+        state = itot(i, length)
+        comparator.setinput(state)
+        output = comparator.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s >> %s" % fmt
+        print(fmtstr)
+    print("")
 
 
 def runTests():

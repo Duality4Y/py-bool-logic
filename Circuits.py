@@ -498,7 +498,16 @@ class GreaterThenComparator(object):
     1 bit greater then magnitude comparator
     """
     def __init__(self):
-        pass
+        self.signal = ()
+        self.output = ()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        Ai, Bi, Gi = self.signal
+        first = And((Not(Ai), Not(Bi)))
+        return self.output
 
 
 class FourBitEquComparator(object):
