@@ -493,6 +493,14 @@ class EquComparator(object):
         return self.output
 
 
+class GreaterThenComparator(object):
+    """
+    1 bit greater then magnitude comparator
+    """
+    def __init__(self):
+        pass
+
+
 class FourBitEquComparator(object):
     def __init__(self):
         self.signal = ()
