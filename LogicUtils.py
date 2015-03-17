@@ -57,7 +57,14 @@ def testConversion(start=0):
 
 
 def states(length=2):
-    pass
+    for intrep in range(0, 2**length):
+        yield itot(intrep, length)
+
+
+def testStatesGenerator():
+    for i in range(1, 4):
+        for rep in states(i+1):
+            print(rep)
 
 
 def generateTableFile(numin, numout, head=None, tablefile='table.txt'):
