@@ -4,6 +4,8 @@ from LogicUtils import itot
 from LogicUtils import ttoi
 from LogicUtils import getRandomInts
 from LogicUtils import invertTuple
+from LogicUtils import states
+from LogicUtils import appendTuple
 
 
 def checkNot(logic):
@@ -404,9 +406,9 @@ def sipoTesting():
 def testOneBitMagnitudeComparator():
     from Circuits import OneBitMagnitudeComparator as comp
     comparator = comp()
+    length = 2
     print("magnitude comparator test:")
     print(" Ai|Bi  Go|Eo|Lo")
-    length = 2
     for i in range(2**length):
         state = itot(i, length)
         comparator.setinput(state)
@@ -414,6 +416,35 @@ def testOneBitMagnitudeComparator():
         fmt = (state, output)
         fmtstr = "%s %s" % fmt
         print(fmtstr)
+
+
+def testCascadeMagnitudeComparator():
+    from Circuits import CascadeOneBitMagnitudeComparator as comp
+    comparator = comp()
+    length = 5
+    print("cascade magnitude comparator:")
+    print(" Ai|Bi|Gi|Ei|Li  Go|Eo|Lo")
+    for state in states(length):
+        comparator.setinput(state)
+        output = comparator.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s %s" % fmt
+        print(fmtstr)
+
+
+def testFourBitMagnitudeComparator():
+    from Circuits import FourBitMagnitudeComparator as comp
+    comparator = comp()
+    length = 4
+    print("Four bit magnitude comparator:")
+    for i in range(0, length):
+        left, right = getRandomInts(4)
+        state1 = itot(left, 4)
+        state2 = itot(right, 4)
+
+        comparator.setinput(state1, state2, (1, 1, 1))
+        output = comparator.getoutput()
+        print(left, right, output)
 
 
 def runTests():

@@ -492,3 +492,72 @@ class OneBitMagnitudeComparator(object):
         AisB = Nor((AB, BA))
         self.output = (AB, AisB, BA)
         return self.output
+
+
+class CascadeOneBitMagnitudeComparator(object):
+    """
+    cascadable 1 bit magnitude comparator.
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+        self.comparator = OneBitMagnitudeComparator()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        Ai, Bi, Gi, Ei, Li = self.signal
+        signal = (Ai, Bi)
+        self.comparator.setinput(signal)
+        G, E, L = self.comparator.getoutput()
+
+        Go = Or((And((Gi, E)), G))
+        Lo = Or((And((Li, E)), L))
+        Eo = And((E, Ei))
+
+        self.output = (Go, Eo, Lo)
+        return self.output
+
+
+class FourBitMagnitudeComparator(object):
+    """
+    4 bit magnitude comparator.
+    """
+    def __init__(self):
+        self.Ai = ()
+        self.Bi = ()
+        self.previous = ()
+        self.output = ()
+        self.comp1 = CascadeOneBitMagnitudeComparator()
+        self.comp2 = CascadeOneBitMagnitudeComparator()
+        self.comp3 = CascadeOneBitMagnitudeComparator()
+        self.comp4 = CascadeOneBitMagnitudeComparator()
+
+    def setinput(self, Ai, Bi, previous):
+        self.Ai = Ai
+        self.Bi = Bi
+        self.previous = previous
+
+    def getoutput(self):
+        Ai = self.Ai
+        Bi = self.Bi
+        previous = self.previous
+
+        signal = (appendTuple((Ai[0], Bi[0]), previous))
+        self.comp1.setinput(signal)
+        previous = self.comp1.getoutput()
+
+        signal = (appendTuple((Ai[1], Bi[1]), previous))
+        self.comp2.setinput(signal)
+        previous = self.comp2.getoutput()
+
+        signal = (appendTuple((Ai[2], Bi[2]), previous))
+        self.comp3.setinput(signal)
+        previous = self.comp3.getoutput()
+
+        signal = (appendTuple((Ai[3], Bi[3]), previous))
+        self.comp4.setinput(signal)
+        output = self.comp4.getoutput()
+        self.output = output
+        return self.output

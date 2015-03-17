@@ -31,6 +31,14 @@ def invertTuple(tuplerep):
     return tuple(rep)
 
 
+def appendTuple(*tupleReps):
+    newrep = []
+    for rep in tupleReps:
+        for bit in rep:
+            newrep.append(bit)
+    return tuple(newrep)
+
+
 def testTupleConversion(amount):
     result = True
     for i in xrange(0, 2**amount):
@@ -53,7 +61,7 @@ def testConversion(start=0):
         print("iteration: %d" % iteration)
         if(iteration == 21):
             print("got through test")
-            break
+            return
 
 
 def states(length=2):
@@ -65,6 +73,13 @@ def testStatesGenerator():
     for i in range(1, 4):
         for rep in states(i+1):
             print(rep)
+
+
+def testTupleAppending():
+    output = (1, 0, 1, 0)
+    for state in states(4):
+        output = appendTuple(state, state)
+        print(output)
 
 
 def generateTableFile(numin, numout, head=None, tablefile='table.txt'):
