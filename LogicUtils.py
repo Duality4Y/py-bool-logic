@@ -56,6 +56,10 @@ def testConversion(start=0):
             break
 
 
+def states(length=2):
+    pass
+
+
 def generateTableFile(numin, numout, head=None, tablefile='table.txt'):
     instates = []
     for i in range(0, 2**numin):

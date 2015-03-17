@@ -7,10 +7,5 @@ import LogicTests as test
 
 if __name__ == "__main__":
     # runTests()
-    # test.testFourBitEquComp()
-    test.testEquComparator()
-    test.testFourBitEquComparator()
-    test.testGreaterThenComparator()
-    test.testFourBitGreaterThenComparator()
-    # test.testEquComparator()
+    test.testOneBitMagnitudeComparator()
     print("")

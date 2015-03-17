@@ -474,28 +474,9 @@ implementation of cascadable magnitude comparator logic.
 """
 
 
-class EquComparator(object):
+class OneBitMagnitudeComparator(object):
     """
-    1 bit cascadable equality comparator.
-    """
-    def __init__(self):
-        self.signal = ()
-        self.output = ()
-
-    def setinput(self, signal):
-        self.signal = signal
-
-    def getoutput(self):
-        Ai, Bi, Ei = self.signal
-        C = Xnor((Ai, Bi))
-        Eo = And((C, Ei))
-        self.output = (Eo)
-        return self.output
-
-
-class GreaterThenComparator(object):
-    """
-    1 bit greater then magnitude comparator
+    1 bit magnitude comparator.
     """
     def __init__(self):
         self.signal = ()
@@ -505,83 +486,9 @@ class GreaterThenComparator(object):
         self.signal = signal
 
     def getoutput(self):
-        Ai, Bi, Gi = self.signal
-        A = And((Ai, Bi))
-        B = And((Not(Ai), Not(Bi)))
-        C = And((Ai, Not(Bi)))
-        D = Or((Or((A, B)), C))
-        self.output = Xnor((D, Gi))
-        return self.output
-
-
-class FourBitGreaterComparator(object):
-    """
-    4 bit magnitude comparator A > B
-    """
-    def __init__(self):
-        self.signal = ()
-        self.output = ()
-        self.comp1 = GreaterThenComparator()
-        self.comp2 = GreaterThenComparator()
-        self.comp3 = GreaterThenComparator()
-        self.comp4 = GreaterThenComparator()
-
-    def setinput(self, signal):
-        self.signal = signal
-
-    def getoutput(self):
-        A, B, Gi = self.signal
-        A = A[::-1]
-        B = B[::-1]
-
-        signal = (A[0], B[0], Gi)
-        self.comp1.setinput(signal)
-        Gi = self.comp1.getoutput()
-
-        signal = (A[1], B[1], Gi)
-        self.comp2.setinput(signal)
-        Gi = self.comp2.getoutput()
-
-        signal = (A[2], B[2], Gi)
-        self.comp3.setinput(signal)
-        Gi = self.comp3.getoutput()
-
-        signal = (A[3], B[3], Gi)
-        self.comp4.setinput(signal)
-        Gi = self.comp4.getoutput()
-        self.output = Gi
-        return self.output
-
-
-class FourBitEquComparator(object):
-    def __init__(self):
-        self.signal = ()
-        self.output = ()
-        self.comp1 = EquComparator()
-        self.comp2 = EquComparator()
-        self.comp3 = EquComparator()
-        self.comp4 = EquComparator()
-
-    def setinput(self, signal):
-        self.signal = signal
-
-    def getoutput(self):
-        A, B, Ei = self.signal
-
-        signal = (A[0], B[0], Ei)
-        self.comp1.setinput(signal)
-        Ei = self.comp1.getoutput()
-
-        signal = (A[1], B[1], Ei)
-        self.comp2.setinput(signal)
-        Ei = self.comp2.getoutput()
-
-        signal = (A[2], B[2], Ei)
-        self.comp3.setinput(signal)
-        Ei = self.comp3.getoutput()
-
-        signal = (A[3], B[3], Ei)
-        self.comp4.setinput(signal)
-        self.output = self.comp4.getoutput()
-
+        Ai, Bi = self.signal
+        AB = And((Ai, Not(Bi)))
+        BA = And((Not(Ai), Bi))
+        AisB = Nor((AB, BA))
+        self.output = (AB, AisB, BA)
         return self.output

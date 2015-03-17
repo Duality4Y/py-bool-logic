@@ -401,81 +401,19 @@ def sipoTesting():
     print(register.getoutput())
 
 
-def testEquComparator():
-    from Circuits import EquComparator
-    print("Equality comparator:")
-    # or the number of inputs.
-    length = 3
-    comparator = EquComparator()
-    print("input: output:")
-    print(" Ai|Bi|Ei    Eo")
-    for i in range(0, 2**length):
+def testOneBitMagnitudeComparator():
+    from Circuits import OneBitMagnitudeComparator as comp
+    comparator = comp()
+    print("magnitude comparator test:")
+    print(" Ai|Bi  Go|Eo|Lo")
+    length = 2
+    for i in range(2**length):
         state = itot(i, length)
         comparator.setinput(state)
         output = comparator.getoutput()
         fmt = (state, output)
-        fmtstr = "%s >> %s" % fmt
+        fmtstr = "%s %s" % fmt
         print(fmtstr)
-    print("")
-
-
-def testFourBitEquComparator():
-    """
-        A test of a four bit equality comparator,
-        made with cascadable comparators.
-    """
-    from Circuits import FourBitEquComparator
-    print("Four Bit Equality comparator")
-    comparator = FourBitEquComparator()
-    bitlength = 4
-    enabled = 1
-    for a in range(0, 2**bitlength):
-        for b in range(0, 2**bitlength):
-            state1 = itot(a, bitlength)
-            state2 = itot(b, bitlength)
-            signal = (state1, state2, enabled)
-            comparator.setinput(signal)
-            output = comparator.getoutput()
-            if output:
-                fmt = (ttoi(state1), ttoi(state2), bool(output))
-                fmtstr = "%s == %s : %s"
-                print(fmtstr % fmt)
-    print("")
-
-
-def testGreaterThenComparator():
-    from Circuits import GreaterThenComparator
-    print("A > B comparator:")
-    length = 3
-    comparator = GreaterThenComparator()
-    print("input: output:")
-    print(" Ai|Bi|Gi    Go")
-    for i in range(0, 2**length):
-        state = itot(i, length)
-        comparator.setinput(state)
-        output = comparator.getoutput()
-        fmt = (state, output)
-        fmtstr = "%s >> %s" % fmt
-        print(fmtstr)
-    print("")
-
-
-def testFourBitGreaterThenComparator():
-    from Circuits import FourBitGreaterComparator
-    print(" A > B comparator: ")
-    comparator = FourBitGreaterComparator()
-    bitlength = 4
-    enabled = 1
-    for a in range(0, 5):
-        for b in range(0, 5):
-            state1 = itot(a, bitlength)
-            state2 = itot(b, bitlength)
-            signal = (state1, state2, enabled)
-            comparator.setinput(signal)
-            output = comparator.getoutput()
-            fmt = (ttoi(state1), ttoi(state2), bool(output))
-            fmtstr = "%s > %s : %s"
-            print(fmtstr % fmt)
 
 
 def runTests():
