@@ -542,7 +542,9 @@ class FourBitMagnitudeComparator(object):
     def getoutput(self):
         Ai = self.Ai
         Bi = self.Bi
-        previous = self.previous
+
+        Gi, Ei, Li = self.previous
+        previous = (Gi, Not(Ei), Li)
 
         signal = (appendTuple((Ai[0], Bi[0]), previous))
         self.comp1.setinput(signal)

@@ -5,7 +5,6 @@ from LogicUtils import ttoi
 from LogicUtils import getRandomInts
 from LogicUtils import invertTuple
 from LogicUtils import states
-from LogicUtils import appendTuple
 
 
 def checkNot(logic):
@@ -437,12 +436,12 @@ def testFourBitMagnitudeComparator():
     comparator = comp()
     length = 4
     print("Four bit magnitude comparator:")
-    for i in range(0, length):
+    for i in range(0, length*10):
         left, right = getRandomInts(4)
         state1 = itot(left, 4)
         state2 = itot(right, 4)
 
-        comparator.setinput(state1, state2, (1, 1, 1))
+        comparator.setinput(state1, state2, (0, 0, 0))
         output = comparator.getoutput()
         print(left, right, output)
 
