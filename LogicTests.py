@@ -444,6 +444,7 @@ def testFourBitMagnitudeComparator():
         comparator.setinput(state1, state2, (0, 0, 0))
         output = comparator.getoutput()
         print(left, right, output)
+    print("")
 
 
 def runTests():
