@@ -304,7 +304,7 @@ class GatedDataLatch(object):
 
 
 class MSDataLatch(object):
-    """ implemenation of a master slave data latch """
+    """ implemenation of a master slave data flipflop """
     def __init__(self):
         self.signal = (0, 0)
         self.output = []
@@ -456,17 +456,52 @@ class SiPoRegister(object):
         self.latch1.setinput(self.signal)
         q, qn = self.latch1.getoutput()
         output.append(q)
+
         self.latch2.setinput((q, clock))
         q, qn = self.latch2.getoutput()
         output.append(q)
+
         self.latch3.setinput((q, clock))
         q, qn = self.latch3.getoutput()
         output.append(q)
+
         self.latch4.setinput((q, clock))
         q, qn = self.latch4.getoutput()
         output.append(q)
 
-        return tuple(output)
+        self.output = output
+        return tuple(self.output)
+
+
+class XBitSiPoRegister(object):
+    """
+    implementation of a serial in paralel out register.
+    with variable bit length
+    """
+    def __init__(self, length=4):
+        self.length = length
+        self.signal = ()
+        self.output = ()
+
+        self.flipflops = []
+        for i in range(0, length):
+            self.flipflops.append(MSDataLatch())
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        output = []
+        data, clock = self.signal
+
+        for flipflop in self.flipflops:
+            signal = (data, clock)
+            flipflop.setinput(signal)
+            data, qn = flipflop.getoutput()
+            output.append(data)
+
+        self.output = tuple(output)
+        return self.output
 
 
 """

@@ -7,7 +7,5 @@ import LogicTests as test
 
 if __name__ == "__main__":
     # runTests()
-    test.testOneBitMagnitudeComparator()
-    test.testCascadeMagnitudeComparator()
-    test.testFourBitMagnitudeComparator()
+    test.testXBitSiPoRegister()
     print("")

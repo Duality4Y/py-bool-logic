@@ -368,6 +368,30 @@ def testCounter():
         char = getch()
 
 
+def testXBitSiPoRegister():
+    from Circuits import XBitSiPoRegister
+    from getch import getch
+    import sys
+    register = XBitSiPoRegister(length=4)
+
+    print("XBit SiPo register:")
+    clock = 0
+    data = 0
+    char = ""
+    while(char != u'q'):
+        if(char == u'c'):
+            clock = logic.Not(clock)
+        elif(char == u'd'):
+            data = logic.Not(data)
+        signal = (data, clock)
+        register.setinput(signal)
+        output = register.getoutput()
+        fmt = (clock, data, output)
+        fmtstr = "\rClock:%s Data:%s Output:%s"
+        sys.stdout.write(fmtstr % fmt)
+        char = getch()
+
+
 def sipoTesting():
     from Circuits import SiPoRegister
     register = SiPoRegister()
@@ -459,3 +483,6 @@ def runTests():
     testJKFlipflop()
     testTFlipflop()
     testCounter()
+    test.testOneBitMagnitudeComparator()
+    test.testCascadeMagnitudeComparator()
+    test.testFourBitMagnitudeComparator()
