@@ -372,7 +372,7 @@ def testXBitSiPoRegister():
     from Circuits import XBitSiPoRegister
     from getch import getch
     import sys
-    register = XBitSiPoRegister(length=4)
+    register = XBitSiPoRegister(length=32)
 
     print("XBit SiPo register:")
     clock = 0
