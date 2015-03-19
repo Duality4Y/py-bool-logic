@@ -274,6 +274,34 @@ def testPiPoRegister():
     print("")
 
 
+def testXBitPiPoRegister():
+    from Circuits import XBitPiPoRegister
+    from getch import getch
+    import time
+    import sys
+    bitlength = 4
+    register = XBitPiPoRegister(length=bitlength)
+    print("\nvariable length parallel in parallel out register:")
+    data = itot(0, bitlength)
+    clock = 0
+    char = ''
+    while(char != u'q'):
+        if char >= u'0' and char <= u'9':
+            intdata = ttoi(data)
+            shifted = (ord(char) - ord(u'0') - 1)
+            intdata ^= (1 << shifted)
+            data = itot(intdata, bitlength)
+        elif char == u'c':
+            clock = logic.Not(clock)
+        signal = (data, clock)
+        register.setinput(signal)
+        output = register.getoutput()
+        fmt = (clock, data, output, time.time())
+        fmtstr = "Clock:%s Input:%s Output:%s %s\r" % fmt
+        sys.stdout.write(fmtstr)
+        char = getch()
+
+
 def d_latch_vs_dms_latch():
     from getch import getch
     import sys
@@ -372,7 +400,7 @@ def testXBitSiPoRegister():
     from Circuits import XBitSiPoRegister
     from getch import getch
     import sys
-    register = XBitSiPoRegister(length=32)
+    register = XBitSiPoRegister(length=4)
 
     print("XBit SiPo register:")
     clock = 0

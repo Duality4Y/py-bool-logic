@@ -324,6 +324,8 @@ class MSDataLatch(object):
         self.output = self.slave.getoutput()
         return self.output
 
+DataFlipFlop = MSDataLatch
+
 
 class JKFlipFlop(object):
     """
@@ -415,7 +417,7 @@ class PiPoRegister(object):
 
         self.latches = []
         for i in range(0, self.length):
-            self.latches.append(GatedDataLatch())
+            self.latches.append(DataFlipFlop())
 
     def setinput(self, signal):
         self.signal = signal
@@ -430,6 +432,20 @@ class PiPoRegister(object):
             output.append(latch.getoutput()[0])
         self.output = output
         return tuple(self.output)
+
+
+class XBitPiPoRegister(PiPoRegister):
+    """
+    variable length pipo register.
+    """
+    def __init__(self, length=8):
+        PiPoRegister.__init__(self, length)
+
+    def setinput(self, signal):
+        PiPoRegister.setinput(self, signal)
+
+    def getoutput(self):
+        return PiPoRegister.getoutput(self)
 
 
 class SiPoRegister(object):
