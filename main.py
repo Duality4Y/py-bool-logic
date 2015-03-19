@@ -8,5 +8,6 @@ import LogicTests as test
 if __name__ == "__main__":
     # runTests()
     # test.testXBitSiPoRegister()
-    test.testXBitPiPoRegister()
+    # test.testXBitPiPoRegister()
+    test.testMultiInputLogic()
     print("")

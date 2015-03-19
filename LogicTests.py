@@ -42,6 +42,20 @@ def printTestLogic():
     tableCheck(logic.Xnor)
 
 
+def testMultiInputLogic():
+    length = 4
+    print("Input:        Or:    And:    Nor:   Nand:")
+    for i in range(0, 2**length):
+        state = itot(i, length)
+        ored = logic.Or(state)
+        anded = logic.And(state)
+        nored = logic.Nor(state)
+        nanded = logic.Nand(state)
+        fmt = (state, ored, anded, nored, nanded)
+        fmtstr = ("%s:\t%s\t%s\t%s\t%s" % fmt)
+        print(fmtstr)
+
+
 def testHalfAdder():
     from Circuits import HalfAdder
     h1 = HalfAdder()
