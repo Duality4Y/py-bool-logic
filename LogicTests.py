@@ -44,7 +44,7 @@ def printTestLogic():
 
 def testMultiInputLogic():
     length = 4
-    print("Input:        Or:    And:    Nor:   Nand:  Xored:")
+    print("Input:        Or:    And:    Nor:   Nand:  Xored: Xnored:")
     for i in range(0, 2**length):
         state = itot(i, length)
         ored = logic.Or(state)
@@ -52,8 +52,9 @@ def testMultiInputLogic():
         nored = logic.Nor(state)
         nanded = logic.Nand(state)
         Xored = logic.Xor(state)
-        fmt = (state, ored, anded, nored, nanded, Xored)
-        fmtstr = ("%s:\t%s\t%s\t%s\t%s\t%s" % fmt)
+        Xnored = logic.Xnor(state)
+        fmt = (state, ored, anded, nored, nanded, Xored, Xnored)
+        fmtstr = ("%s:\t%s\t%s\t%s\t%s\t%s\t%s" % fmt)
         print(fmtstr)
 
 
