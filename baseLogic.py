@@ -26,11 +26,12 @@ def And(signal):
 
 def Xor(signal):
     """ return signal (A xor B) """
-    a, b = signal
-    left = And((a, Not(b)))
-    right = And((b, Not(a)))
-    result = Or((left, right))
-    return (result)
+    output = 0
+    for bit in signal:
+        left = And((output, Not(bit)))
+        right = And((Not(output), bit))
+        output = Or((left, right))
+    return (output)
 
 
 def Nand(signal):
