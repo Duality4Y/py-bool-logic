@@ -9,13 +9,19 @@ def Not(signal):
 
 
 def Or(signal):
-    """ return signal (A or B) """
-    return (signal[0] | signal[1])
+    """ return signal allinputs orred. """
+    output = 0
+    for bit in signal:
+        output |= bit
+    return (output)
 
 
 def And(signal):
     """ return signal (A and B) """
-    return (signal[0] & signal[1])
+    output = 1
+    for bit in signal:
+        output &= bit
+    return (output)
 
 
 def Xor(signal):
