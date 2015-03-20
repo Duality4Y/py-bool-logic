@@ -528,6 +528,21 @@ def testFourBitMagnitudeComparator():
     print("")
 
 
+def testEncoder():
+    from Circuits import Encoder
+    encoder = Encoder()
+    inputs = 8
+    print("Encoder: ")
+    for i in range(0, inputs):
+        inputed = (1 << i)
+        state = itot(inputed, inputs)
+        encoder.setinput(state)
+        output = encoder.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s : %s" % fmt
+        print(fmtstr)
+
+
 def runTests():
     printTestLogic()
     testHalfAdder()

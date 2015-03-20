@@ -614,3 +614,37 @@ class FourBitMagnitudeComparator(object):
         output = self.comp4.getoutput()
         self.output = output
         return self.output
+
+
+class Encoder(object):
+    """
+    8 to 3 encoder
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        signal = self.signal
+        xout = Or((signal[1], signal[3], signal[5], signal[7]))
+        yout = Or((signal[2], signal[3], signal[6], signal[7]))
+        zout = Or((signal[4], signal[5], signal[6], signal[7]))
+        self.output = (xout, yout, zout)
+        return self.output
+
+
+class Decoder(object):
+    """
+    3 to 8 decoder
+    """
+    def __init__(self):
+        pass
+
+    def setinput(self, signal):
+        pass
+
+    def getoutput(self):
+        pass

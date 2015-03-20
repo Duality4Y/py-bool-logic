@@ -9,5 +9,6 @@ if __name__ == "__main__":
     # runTests()
     # test.testXBitSiPoRegister()
     # test.testXBitPiPoRegister()
-    test.testMultiInputLogic()
+    # test.testMultiInputLogic()
+    test.testEncoder()
     print("")
