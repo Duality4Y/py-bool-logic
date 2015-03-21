@@ -558,6 +558,29 @@ def testDecoder():
     print("")
 
 
+def testXBitDecoder():
+    from Circuits import XBitDecoder
+    bitlength = 2
+    decoder = XBitDecoder(length=bitlength)
+    print("Variable length decoder length=2: ")
+    for state in states(bitlength):
+        decoder.setinput(state)
+        output = decoder.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s : %s" % fmt
+        print(fmtstr)
+    print("")
+    print("length=4")
+    bitlength = 4
+    decoder = XBitDecoder(length=bitlength)
+    for state in states(bitlength):
+        decoder.setinput(state)
+        output = decoder.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s : %s" % fmt
+        print(fmtstr)
+
+
 def runTests():
     printTestLogic()
     testHalfAdder()
@@ -570,6 +593,6 @@ def runTests():
     testJKFlipflop()
     testTFlipflop()
     testCounter()
-    test.testOneBitMagnitudeComparator()
-    test.testCascadeMagnitudeComparator()
-    test.testFourBitMagnitudeComparator()
+    testOneBitMagnitudeComparator()
+    testCascadeMagnitudeComparator()
+    testFourBitMagnitudeComparator()

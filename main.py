@@ -4,7 +4,6 @@
 """
 
 import LogicTests as test
-import LogicUtils as util
 
 if __name__ == "__main__":
     # runTests()
@@ -13,5 +12,5 @@ if __name__ == "__main__":
     # test.testMultiInputLogic()
     test.testEncoder()
     test.testDecoder()
-    util.testPaddedTuple()
+    test.testXBitDecoder()
     print("")

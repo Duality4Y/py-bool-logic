@@ -675,12 +675,10 @@ class XBitDecoder(object):
         self.output = ()
         self.lengt = length
 
-        self.complements = list()
+        self.complements = list(paddedTuple(length))
 
-    def getinput(self, signal):
+    def setinput(self, signal):
         self.signal = signal
 
     def getoutput(self):
-        print(paddedTuple(self.length, 0))
-        print(paddedTuple(self.length, 1))
-        return (1, )
+        a, b, c, d = self.signal
