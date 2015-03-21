@@ -520,11 +520,6 @@ class XBitSiPoRegister(object):
         return self.output
 
 
-"""
-implementation of cascadable magnitude comparator logic.
-"""
-
-
 class OneBitMagnitudeComparator(object):
     """
     1 bit magnitude comparator.
