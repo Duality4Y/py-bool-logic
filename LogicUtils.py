@@ -39,6 +39,29 @@ def appendTuple(*tupleReps):
     return tuple(newrep)
 
 
+def paddedTuple(size, pat=1):
+    rep = []
+    for i in range(size):
+        if pat:
+            rep.append(i % 2)
+        else:
+            rep.append(1 - (i % 2))
+    return tuple(rep)
+
+
+def testPaddedTuple(size=32):
+    import baseLogic
+    print("padded test: ")
+    state1 = paddedTuple(size, 0)
+    state2 = paddedTuple(size, 1)
+    print(state1)
+    print(state2)
+    print(baseLogic.Xor(state1))
+    print(baseLogic.Xor(state2))
+    print(baseLogic.Xnor(state1))
+    print(baseLogic.Xnor(state2))
+
+
 def testTupleConversion(amount):
     result = True
     for i in xrange(0, 2**amount):

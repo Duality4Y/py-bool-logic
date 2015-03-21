@@ -664,3 +664,23 @@ class Decoder(object):
 
         self.output = tuple(output)
         return self.output
+
+
+class XBitDecoder(object):
+    """
+    x to 2**x decoder
+    """
+    def __init__(self, length=4):
+        self.signal = ()
+        self.output = ()
+        self.lengt = length
+
+        self.complements = list()
+
+    def getinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        print(paddedTuple(self.length, 0))
+        print(paddedTuple(self.length, 1))
+        return (1, )
