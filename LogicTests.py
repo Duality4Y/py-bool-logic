@@ -541,6 +541,21 @@ def testEncoder():
         fmt = (state, output)
         fmtstr = "%s : %s" % fmt
         print(fmtstr)
+    print("")
+
+
+def testDecoder():
+    from Circuits import Decoder
+    decoder = Decoder()
+    inputs = 3
+    print("Decoder: ")
+    for state in states(inputs):
+        decoder.setinput(state)
+        output = decoder.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s : %s" % fmt
+        print(fmtstr)
+    print("")
 
 
 def runTests():

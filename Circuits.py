@@ -638,13 +638,34 @@ class Encoder(object):
 
 class Decoder(object):
     """
-    3 to 8 decoder
+    2 to 4 decoder
     """
     def __init__(self):
-        pass
+        self.signal = ()
+        self.output = ()
 
     def setinput(self, signal):
-        pass
+        self.signal = signal
 
     def getoutput(self):
-        pass
+        A, B, Enable = self.signal
+        output = []
+
+        signal = (Not(A), Not(B), Enable)
+        D0 = And(signal)
+        output.append(D0)
+
+        signal = (A, Not(B), Enable)
+        D1 = And(signal)
+        output.append(D1)
+
+        signal = (Not(A), B, Enable)
+        D2 = And(signal)
+        output.append(D2)
+
+        signal = (A, B, Enable)
+        D3 = And(signal)
+        output.append(D3)
+
+        self.output = tuple(output)
+        return self.output

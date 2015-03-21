@@ -11,4 +11,5 @@ if __name__ == "__main__":
     # test.testXBitPiPoRegister()
     # test.testMultiInputLogic()
     test.testEncoder()
+    test.testDecoder()
     print("")
