@@ -64,7 +64,7 @@ def testPaddedTuple(size=32):
 
 def testTupleConversion(amount):
     result = True
-    for i in xrange(0, 2**amount):
+    for i in range(0, 2**amount):
         it = itot(i, amount)
         ti = ttoi(it)
         if ti != i:
