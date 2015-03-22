@@ -1,5 +1,5 @@
-from baseLogic import *
-from LogicUtils import *
+from baseLogic import Not, And, Or, Nor, Xor
+from LogicUtils import appendTuple, paddedTuple
 
 
 class HalfAdder(object):
@@ -681,4 +681,4 @@ class XBitDecoder(object):
         self.signal = signal
 
     def getoutput(self):
-        a, b, c, d = self.signal
+        pass
