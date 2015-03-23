@@ -698,3 +698,30 @@ class Decoder3to8(object):
         self.output = tuple(output)
 
         return(self.output)
+
+
+class Decoder4to16(object):
+    """
+    4 to 16 decoder
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+        self.length = 4
+        self.selector = Decoder2to4()
+        self.decoders = {}
+        for i in range(0, self.length):
+            self.decoders[i] = Decoder3to8()
+        print(self.decoders)
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        A, B, C, D, Enable = self.signal
+
+        # C, D input select the decoder.
+        signal = (C, D, Enable)
+        self.selector.setinput(signal)
+        selected = self.selector.getoutput()
+        print(selected)

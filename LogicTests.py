@@ -575,7 +575,18 @@ def testDecoder3to8():
 
 
 def testDecoder4to16():
-    pass
+    from Circuits import Decoder4to16
+    decoder = Decoder4to16()
+    # 4 inputs plus enable
+    inputs = 5
+    print("Decoder4to16: ")
+    for state in states(inputs):
+        decoder.setinput(state)
+        output = decoder.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s : %s" % fmt
+        #print(fmtstr)
+    print("")
 
 
 def runTests():
