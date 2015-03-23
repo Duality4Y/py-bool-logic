@@ -1,5 +1,5 @@
 from baseLogic import Not, And, Or, Nor, Xor
-from LogicUtils import appendTuple, paddedTuple
+from LogicUtils import appendTuple
 
 
 class HalfAdder(object):
@@ -29,9 +29,9 @@ class HalfSubtractor(object):
     def getoutput(self):
         # Bwi borrow in.
         a, b = self.signal
-        D = Xor((a, b))
-        B = And((Not(a), b))
-        return (B, D)
+        d = Xor((a, b))
+        b = And((Not(a), b))
+        return (b, d)
 
 
 class FullAdder(object):
@@ -785,4 +785,13 @@ class Decoder6to64(object):
         self.signal = signal
 
     def getoutput(self):
-        pass
+        A, B, C, D, E, F, Enable = self.signal
+        output = []
+
+        # C, D, E, F input select decoder
+        signal = (C, D, E, F, Enable)
+        self.selector.setinput(signal)
+        selected = self.selector.getoutput()
+
+        for decoder in self.decoders:
+            signal = (A, B, selected[decoder])

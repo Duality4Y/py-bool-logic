@@ -606,6 +606,17 @@ def testDecoder5to32():
 
 def testDecoder6to64():
     from Circuits import Decoder6to64
+    decoder = Decoder6to64()
+    # 6 inputs plus enable
+    inputs = 6
+    print("Decoder6to64: ")
+    for state in states(inputs):
+        decoder.setinput(state)
+        output = decoder.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s : %s" % fmt
+        print(fmtstr)
+    print("")
 
 
 def runTests():
