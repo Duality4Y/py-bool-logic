@@ -513,8 +513,8 @@ def testCascadeMagnitudeComparator():
 
 
 def testFourBitMagnitudeComparator():
-    from Circuits import FourBitMagnitudeComparator as comp
-    comparator = comp()
+    from Circuits import FourBitMagnitudeComparator as Comp
+    comparator = Comp()
     length = 4
     print("Four bit magnitude comparator:")
     for i in range(0, length*10):
@@ -528,7 +528,7 @@ def testFourBitMagnitudeComparator():
     print("")
 
 
-def testEncoder8to3():
+def testencoder8to3():
     from Circuits import Encoder8to3
     encoder = Encoder8to3()
     inputs = 8
@@ -544,7 +544,7 @@ def testEncoder8to3():
     print("")
 
 
-def testDecoder2to4():
+def testdecoder2to4():
     from Circuits import Decoder2to4
     decoder = Decoder2to4()
     # 2 plus enable
@@ -559,7 +559,7 @@ def testDecoder2to4():
     print("")
 
 
-def testDecoder3to8():
+def testdecoder3to8():
     from Circuits import Decoder3to8
     decoder = Decoder3to8()
     # 3 inputs plus enable
@@ -574,7 +574,7 @@ def testDecoder3to8():
     print("")
 
 
-def testDecoder4to16():
+def testdecoder4to16():
     from Circuits import Decoder4to16
     decoder = Decoder4to16()
     # 4 inputs plus enable
@@ -589,7 +589,7 @@ def testDecoder4to16():
     print("")
 
 
-def testDecoder5to32():
+def testdecoder5to32():
     from Circuits import Decoder5to32
     decoder = Decoder5to32()
     # 5 inputs plus enabled
@@ -604,11 +604,11 @@ def testDecoder5to32():
     print("")
 
 
-def testDecoder6to64():
+def testdecoder6to64():
     from Circuits import Decoder6to64
     decoder = Decoder6to64()
     # 6 inputs plus enable
-    inputs = 6
+    inputs = 7
     print("Decoder6to64: ")
     for state in states(inputs):
         decoder.setinput(state)

@@ -797,3 +797,8 @@ class Decoder6to64(object):
 
         for decoder in self.decoders:
             signal = (a, b, selected[decoder])
+            self.decoders[decoder].setinput(signal)
+            output += self.decoders[decoder].getoutput()
+
+        self.output = tuple(output)
+        return self.output
