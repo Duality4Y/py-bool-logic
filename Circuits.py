@@ -345,9 +345,10 @@ class JKFlipFlop(object):
         j, k, clock = self.signal
         q, qn = self.output
         k = Not(k)
-        orA = And((j, qn))
-        orB = And((k, q))
-        d = Or((orA, orB))
+        ora = And((j, qn))
+        orb = And((k, q))
+        signal = (ora, orb)
+        d = Or(signal)
         signal = (d, clock)
         self.flipflop.setinput(signal)
         self.output = self.flipflop.getoutput()
@@ -533,10 +534,11 @@ class OneBitMagnitudeComparator(object):
 
     def getoutput(self):
         Ai, Bi = self.signal
-        AB = And((Ai, Not(Bi)))
-        BA = And((Not(Ai), Bi))
-        AisB = Nor((AB, BA))
-        self.output = (AB, AisB, BA)
+        ab = And((Ai, Not(Bi)))
+        ba = And((Not(Ai), Bi))
+        signal = (ab, ba)
+        aisb = Nor(signal)
+        self.output = (ab, aisb, ba)
         return self.output
 
 
@@ -556,13 +558,13 @@ class CascadeOneBitMagnitudeComparator(object):
         Ai, Bi, Gi, Ei, Li = self.signal
         signal = (Ai, Bi)
         self.comparator.setinput(signal)
-        G, E, L = self.comparator.getoutput()
+        g, e, l = self.comparator.getoutput()
 
-        Go = Or((And((Gi, E)), G))
-        Lo = Or((And((Li, E)), L))
-        Eo = And((E, Ei))
+        go = Or((And((Gi, e)), g))
+        lo = Or((And((Li, e)), l))
+        eo = And((e, Ei))
 
-        self.output = (Go, Eo, Lo)
+        self.output = (go, eo, lo)
         return self.output
 
 
@@ -580,31 +582,31 @@ class FourBitMagnitudeComparator(object):
         self.comp3 = CascadeOneBitMagnitudeComparator()
         self.comp4 = CascadeOneBitMagnitudeComparator()
 
-    def setinput(self, Ai, Bi, previous):
-        self.Ai = Ai
-        self.Bi = Bi
+    def setinput(self, ai, bi, previous):
+        self.Ai = ai
+        self.Bi = bi
         self.previous = previous
 
     def getoutput(self):
-        Ai = self.Ai
-        Bi = self.Bi
+        ai = self.Ai
+        bi = self.Bi
 
         Gi, Ei, Li = self.previous
         previous = (Gi, Not(Ei), Li)
 
-        signal = (appendTuple((Ai[0], Bi[0]), previous))
+        signal = (appendTuple((ai[0], bi[0]), previous))
         self.comp1.setinput(signal)
         previous = self.comp1.getoutput()
 
-        signal = (appendTuple((Ai[1], Bi[1]), previous))
+        signal = (appendTuple((ai[1], bi[1]), previous))
         self.comp2.setinput(signal)
         previous = self.comp2.getoutput()
 
-        signal = (appendTuple((Ai[2], Bi[2]), previous))
+        signal = (appendTuple((ai[2], bi[2]), previous))
         self.comp3.setinput(signal)
         previous = self.comp3.getoutput()
 
-        signal = (appendTuple((Ai[3], Bi[3]), previous))
+        signal = (appendTuple((ai[3], bi[3]), previous))
         self.comp4.setinput(signal)
         output = self.comp4.getoutput()
         self.output = output
@@ -643,24 +645,24 @@ class Decoder2to4(object):
         self.signal = signal
 
     def getoutput(self):
-        A, B, Enable = self.signal
+        a, b, Enable = self.signal
         output = []
 
-        signal = (Not(A), Not(B), Enable)
-        D0 = And(signal)
-        output.append(D0)
+        signal = (Not(a), Not(b), Enable)
+        d0 = And(signal)
+        output.append(d0)
 
-        signal = (A, Not(B), Enable)
-        D1 = And(signal)
-        output.append(D1)
+        signal = (a, Not(b), Enable)
+        d1 = And(signal)
+        output.append(d1)
 
-        signal = (Not(A), B, Enable)
-        D2 = And(signal)
-        output.append(D2)
+        signal = (Not(a), b, Enable)
+        d2 = And(signal)
+        output.append(d2)
 
-        signal = (A, B, Enable)
-        D3 = And(signal)
-        output.append(D3)
+        signal = (a, b, Enable)
+        d3 = And(signal)
+        output.append(d3)
 
         self.output = tuple(output)
         return self.output
@@ -680,15 +682,15 @@ class Decoder3to8(object):
         self.signal = signal
 
     def getoutput(self):
-        A, B, C, Enable = self.signal
+        a, b, ca, Enable = self.signal
         output = []
 
         # last one first because of order enabled.
-        signal = (A, B, Not(C))
+        signal = (a, b, Not(ca))
         self.decoder2.setinput(signal)
         output += self.decoder2.getoutput()
 
-        signal = (A, B, C)
+        signal = (a, b, ca)
         self.decoder1.setinput(signal)
         output += self.decoder1.getoutput()
 
@@ -717,16 +719,16 @@ class Decoder4to16(object):
         self.signal = signal
 
     def getoutput(self):
-        A, B, C, D, Enable = self.signal
+        a, b, c, d, Enable = self.signal
         output = []
 
         # C, D input select the decoder.
-        signal = (C, D, Enable)
+        signal = (c, d, Enable)
         self.selector.setinput(signal)
         selected = self.selector.getoutput()
 
         for decoder in self.decoders:
-            signal = (A, B, selected[decoder])
+            signal = (a, b, selected[decoder])
             self.decoders[decoder].setinput(signal)
             output += self.decoders[decoder].getoutput()
 
@@ -751,16 +753,16 @@ class Decoder5to32(object):
         self.signal = signal
 
     def getoutput(self):
-        A, B, C, D, E, Enable = self.signal
+        a, b, c, d, e, Enable = self.signal
         output = []
 
         # C, D, E input select decoder
-        signal = (C, D, E, Enable)
+        signal = (c, d, e, Enable)
         self.selector.setinput(signal)
         selected = self.selector.getoutput()
 
         for decoder in self.decoders:
-            signal = (A, B, selected[decoder])
+            signal = (a, b, selected[decoder])
             self.decoders[decoder].setinput(signal)
             output += self.decoders[decoder].getoutput()
 
@@ -785,13 +787,13 @@ class Decoder6to64(object):
         self.signal = signal
 
     def getoutput(self):
-        A, B, C, D, E, F, Enable = self.signal
+        a, b, c, d, e, f, Enable = self.signal
         output = []
 
         # C, D, E, F input select decoder
-        signal = (C, D, E, F, Enable)
+        signal = (c, d, e, f, Enable)
         self.selector.setinput(signal)
         selected = self.selector.getoutput()
 
         for decoder in self.decoders:
-            signal = (A, B, selected[decoder])
+            signal = (a, b, selected[decoder])
