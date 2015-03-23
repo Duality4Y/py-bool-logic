@@ -14,5 +14,6 @@ if __name__ == "__main__":
     test.testDecoder2to4()
     test.testDecoder3to8()
     test.testDecoder4to16()
-    # test.test
+    test.testDecoder5to32()
+    test.testDecoder6to64()
     print("")

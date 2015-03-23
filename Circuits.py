@@ -711,17 +711,78 @@ class Decoder4to16(object):
         self.selector = Decoder2to4()
         self.decoders = {}
         for i in range(0, self.length):
-            self.decoders[i] = Decoder3to8()
-        print(self.decoders)
+            self.decoders[i] = Decoder2to4()
 
     def setinput(self, signal):
         self.signal = signal
 
     def getoutput(self):
         A, B, C, D, Enable = self.signal
+        output = []
 
         # C, D input select the decoder.
         signal = (C, D, Enable)
         self.selector.setinput(signal)
         selected = self.selector.getoutput()
-        print(selected)
+
+        for decoder in self.decoders:
+            signal = (A, B, selected[decoder])
+            self.decoders[decoder].setinput(signal)
+            output += self.decoders[decoder].getoutput()
+
+        self.output = tuple(output)
+        return self.output
+
+
+class Decoder5to32(object):
+    """
+    5 to 32 decoder
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+        self.length = 8
+        self.selector = Decoder3to8()
+        self.decoders = {}
+        for i in range(0, self.length):
+            self.decoders[i] = Decoder2to4()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        A, B, C, D, E, Enable = self.signal
+        output = []
+
+        # C, D, E input select decoder
+        signal = (C, D, E, Enable)
+        self.selector.setinput(signal)
+        selected = self.selector.getoutput()
+
+        for decoder in self.decoders:
+            signal = (A, B, selected[decoder])
+            self.decoders[decoder].setinput(signal)
+            output += self.decoders[decoder].getoutput()
+
+        self.output = tuple(output)
+        return self.output
+
+
+class Decoder6to64(object):
+    """
+    6 to 64 decoder
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+        self.length = 16
+        self.selector = Decoder4to16()
+        self.decoders = {}
+        for i in range(0, self.length):
+            self.decoders[i] = Decoder2to4()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        pass
