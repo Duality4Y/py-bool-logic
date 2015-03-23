@@ -528,9 +528,9 @@ def testFourBitMagnitudeComparator():
     print("")
 
 
-def testEncoder():
-    from Circuits import Encoder
-    encoder = Encoder()
+def testEncoder8to3():
+    from Circuits import Encoder8to3
+    encoder = Encoder8to3()
     inputs = 8
     print("Encoder: ")
     for i in range(0, inputs):
@@ -544,11 +544,12 @@ def testEncoder():
     print("")
 
 
-def testDecoder():
-    from Circuits import Decoder
-    decoder = Decoder()
+def testDecoder2to4():
+    from Circuits import Decoder2to4
+    decoder = Decoder2to4()
+    # 2 plus enable
     inputs = 3
-    print("Decoder: ")
+    print("Decoder2to4: ")
     for state in states(inputs):
         decoder.setinput(state)
         output = decoder.getoutput()
@@ -558,27 +559,23 @@ def testDecoder():
     print("")
 
 
-def testXBitDecoder():
-    from Circuits import XBitDecoder
-    bitlength = 2
-    decoder = XBitDecoder(length=bitlength)
-    print("Variable length decoder length=2: ")
-    for state in states(bitlength):
+def testDecoder3to8():
+    from Circuits import Decoder3to8
+    decoder = Decoder3to8()
+    # 3 inputs plus enable
+    inputs = 4
+    print("Decoder3to8: ")
+    for state in states(inputs):
         decoder.setinput(state)
         output = decoder.getoutput()
         fmt = (state, output)
         fmtstr = "%s : %s" % fmt
         print(fmtstr)
     print("")
-    print("length=4")
-    bitlength = 4
-    decoder = XBitDecoder(length=bitlength)
-    for state in states(bitlength):
-        decoder.setinput(state)
-        output = decoder.getoutput()
-        fmt = (state, output)
-        fmtstr = "%s : %s" % fmt
-        print(fmtstr)
+
+
+def testDecoder4to16():
+    pass
 
 
 def runTests():

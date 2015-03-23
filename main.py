@@ -10,7 +10,9 @@ if __name__ == "__main__":
     # test.testXBitSiPoRegister()
     # test.testXBitPiPoRegister()
     # test.testMultiInputLogic()
-    test.testEncoder()
-    test.testDecoder()
-    test.testXBitDecoder()
+    test.testEncoder8to3()
+    test.testDecoder2to4()
+    test.testDecoder3to8()
+    test.testDecoder4to16()
+    # test.test
     print("")

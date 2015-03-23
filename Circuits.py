@@ -611,7 +611,7 @@ class FourBitMagnitudeComparator(object):
         return self.output
 
 
-class Encoder(object):
+class Encoder8to3(object):
     """
     8 to 3 encoder
     """
@@ -631,7 +631,7 @@ class Encoder(object):
         return self.output
 
 
-class Decoder(object):
+class Decoder2to4(object):
     """
     2 to 4 decoder
     """
@@ -666,19 +666,35 @@ class Decoder(object):
         return self.output
 
 
-class XBitDecoder(object):
+class Decoder3to8(object):
     """
-    x to 2**x decoder
+    3 to 8 decoder
     """
-    def __init__(self, length=4):
+    def __init__(self):
         self.signal = ()
         self.output = ()
-        self.lengt = length
-
-        self.complements = list(paddedTuple(length))
+        self.decoder1 = Decoder2to4()
+        self.decoder2 = Decoder2to4()
 
     def setinput(self, signal):
         self.signal = signal
 
     def getoutput(self):
-        pass
+        A, B, C, Enable = self.signal
+        output = []
+
+        # last one first because of order enabled.
+        signal = (A, B, Not(C))
+        self.decoder2.setinput(signal)
+        output += self.decoder2.getoutput()
+
+        signal = (A, B, C)
+        self.decoder1.setinput(signal)
+        output += self.decoder1.getoutput()
+
+        # output if enabled
+        for i, bit in enumerate(output):
+            output[i] = And((bit, Enable))
+        self.output = tuple(output)
+
+        return(self.output)
