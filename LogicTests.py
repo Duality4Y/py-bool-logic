@@ -5,6 +5,7 @@ from LogicUtils import ttoi
 from LogicUtils import getRandomInts
 from LogicUtils import invertTuple
 from LogicUtils import states
+from LogicUtils import appendTuple
 
 
 def checkNot(logic):
@@ -552,6 +553,21 @@ def testencoder8to3():
     for i in range(0, inputs):
         inputed = (1 << i)
         state = itot(inputed, inputs)
+        encoder.setinput(state)
+        output = encoder.getoutput()
+        fmt = (state, output)
+        fmtstr = "%s : %s" % fmt
+        print(fmtstr)
+    print("")
+
+
+def testencoder():
+    from Circuits import Encoder
+    encoder = Encoder()
+    inputs = 8
+    print("Encoder 8 to 3 with cascade input: ")
+    for i in range(inputs, 0, -1):
+        state = appendTuple(itot((1 << i - 1) ^ 0xFF, inputs), (0,))
         encoder.setinput(state)
         output = encoder.getoutput()
         fmt = (state, output)

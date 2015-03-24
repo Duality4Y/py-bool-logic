@@ -655,6 +655,7 @@ class Encoder8to3(object):
 class Encoder(object):
     """
     implementation based on the 74xx148
+    8 to 3 encoder with cascade inputs.
     """
     def __init__(self):
         self.signal = ()
@@ -663,7 +664,7 @@ class Encoder(object):
     def setinput(self, signal):
         self.signal = signal
 
-    def setoutput(self):
+    def getoutput(self):
         d0, d1, d2, d3, d4, d5, d6, d7, ei = self.signal
         output = []
 
@@ -682,7 +683,8 @@ class Encoder(object):
         signal = (Not(d7), Not(ei))
         d = And(signal)
 
-        a0 = Nor(a, b, c, d)
+        signal = (a, b, c, d)
+        a0 = Nor(signal)
 
         # doing the inputs for A1
         signal = (Not(d2), d4, d5, Not(ei))
@@ -694,7 +696,8 @@ class Encoder(object):
         signal = (Not(d7), Not(ei))
         d = And(signal)
 
-        a1 = Nor(a, b, c, d)
+        signal = (a, b, c, d)
+        a1 = Nor(signal)
 
         # doint the inputs for A2
         signal = (Not(d4), Not(ei))
@@ -706,9 +709,11 @@ class Encoder(object):
         signal = (Not(d7), Not(ei))
         d = And(signal)
 
-        a2 = Not(a, b, c, d)
+        signal = (a, b, c, d)
+        a2 = Nor(signal)
 
-        self.output = (a0, a1, a2, g5, eo)
+        output = (a0, a1, a2, g5, eo)
+        self.output = output
         return self.output
 
 
