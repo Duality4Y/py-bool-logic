@@ -1,4 +1,4 @@
-from baseLogic import Not, And, Or, Nor, Xor
+from baseLogic import Not, And, Or, Nor, Xor, Nand
 from LogicUtils import appendTuple
 
 
@@ -613,6 +613,25 @@ class FourBitMagnitudeComparator(object):
         return self.output
 
 
+class Encoder4to2(object):
+    """
+    4 to 2 encoder
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def getoutput(self):
+        signal = self.signal
+        xout = Or((signal[1], signal[3]))
+        yout = Or((signal[2], signal[3]))
+        self.output = (xout, yout)
+        return self.output
+
+
 class Encoder8to3(object):
     """
     8 to 3 encoder
@@ -631,6 +650,27 @@ class Encoder8to3(object):
         zout = Or((signal[4], signal[5], signal[6], signal[7]))
         self.output = (xout, yout, zout)
         return self.output
+
+
+class Encoder(object):
+    """
+    implementation based on the 74xx148
+    """
+    def __init__(self):
+        self.signal = ()
+        self.output = ()
+
+    def setinput(self, signal):
+        self.signal = signal
+
+    def setoutput(self):
+        d1, d2, d3, d4, d5, d6, d7, d8, ei = self.signal
+        output = []
+
+        signal = (d1, d2, d3, d4, d5, d6, d7, d8, Not(ei))
+        eo = Nand(signal)
+        signal = (eo, Not(ei))
+        g5 = Nand(signal)
 
 
 class Decoder2to4(object):
