@@ -566,8 +566,18 @@ def testencoder():
     encoder = Encoder()
     inputs = 8
     print("Encoder 8 to 3 with cascade input: ")
-    for i in range(inputs, 0, -1):
-        state = appendTuple(itot((1 << i - 1) ^ 0xFF, inputs), (0,))
+    table = [(1, 0, 0, 0, 0, 0, 0, 0, 0),
+             (0, 1, 1, 1, 1, 1, 1, 1, 1),
+             (0, 0, 0, 0, 0, 0, 0, 0, 0),
+             (0, 0, 0, 0, 0, 0, 0, 0, 1),
+             (0, 0, 0, 0, 0, 0, 0, 1, 1),
+             (0, 0, 0, 0, 0, 0, 1, 1, 1),
+             (0, 0, 0, 0, 0, 1, 1, 1, 1),
+             (0, 0, 0, 0, 1, 1, 1, 1, 1),
+             (0, 0, 0, 1, 1, 1, 1, 1, 1),
+             (0, 0, 1, 1, 1, 1, 1, 1, 1), ]
+
+    for state in table:
         encoder.setinput(state)
         output = encoder.getoutput()
         fmt = (state, output)

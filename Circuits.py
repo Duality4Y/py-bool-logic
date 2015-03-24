@@ -665,13 +665,13 @@ class Encoder(object):
         self.signal = signal
 
     def getoutput(self):
-        d0, d1, d2, d3, d4, d5, d6, d7, ei = self.signal
+        ei, d0, d1, d2, d3, d4, d5, d6, d7 = self.signal
         output = []
 
         signal = (d0, d1, d2, d3, d4, d5, d6, d7, Not(ei))
         eo = Nand(signal)
-        signal = (eo, Not(ei))
-        g5 = Nand(signal)
+        signal = (Not(eo), ei)
+        g5 = Or(signal)
 
         # doing the inputs for A0
         signal = (Not(d1), d2, d4, d6, Not(ei))
@@ -702,7 +702,7 @@ class Encoder(object):
         # doint the inputs for A2
         signal = (Not(d4), Not(ei))
         a = And(signal)
-        signal = (Not(d2), Not(ei))
+        signal = (Not(d5), Not(ei))
         b = And(signal)
         signal = (Not(d6), Not(ei))
         c = And(signal)
