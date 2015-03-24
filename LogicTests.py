@@ -564,7 +564,6 @@ def testencoder8to3():
 def testencoder():
     from Circuits import Encoder
     encoder = Encoder()
-    inputs = 8
     print("Encoder 8 to 3 with cascade input: ")
     table = [(1, 0, 0, 0, 0, 0, 0, 0, 0),
              (0, 1, 1, 1, 1, 1, 1, 1, 1),
